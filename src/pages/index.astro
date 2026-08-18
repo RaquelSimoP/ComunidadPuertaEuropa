@@ -54,10 +54,8 @@ const quickLinks = [
 					<p>Un espacio común para consultar información, documentos y novedades de nuestra comunidad de forma clara y sencilla.</p>
 					<div class="hero-actions"><a class="button primary" href="#actualidad">Ver novedades <span set:html={Icon({name:'arrow',size:18})}></span></a><a class="button ghost" href="#documentos">Ir a documentos</a></div>
 				</div>
-				<div class="hero-art" aria-label="Ilustración de edificios y jardines de la comunidad">
-					<div class="sun"></div><div class="cloud one"></div><div class="cloud two"></div>
-					<div class="building b1"><i></i><i></i><i></i></div><div class="building b2"><i></i><i></i><i></i><i></i></div><div class="building b3"><i></i><i></i><i></i></div>
-					<div class="ground"></div><div class="tree t1"></div><div class="tree t2"></div><div class="tree t3"></div>
+				<div class="hero-art">
+					<img src="/images/casitas.webp" alt="Ilustración de viviendas y jardines" width="779" height="132" />
 				</div>
 			</section>
 
@@ -87,12 +85,12 @@ const quickLinks = [
 					<h3>Conclusiones del informe jurídico encargado por la comunidad</h3>
 					<ol>
 						<li>La zona situada bajo los soportales, hasta la línea imaginaria de prolongación de las viviendas, es propiedad privada y de uso exclusivo de la comunidad.</li>
-						<li>Las licencias municipales de las terrazas no autorizan a clientes y trabajadores a atravesar esa zona comunitaria.</li>
+						<li>Las licencias municipales de las terrazas no autorizan a clientes ni a trabajadores a atravesar esa zona comunitaria.</li>
 						<li>La comunidad, como responsable de sus zonas comunes, puede regular el paso e impedir el acceso de personas ajenas.</li>
 						<li>Es posible delimitar la zona privada e instalar un cierre, puerta, verja o control de acceso, respetando los derechos de los propietarios, la accesibilidad, la evacuación y la normativa técnica.</li>
 					</ol>
 				</div>
-				<div class="alert-callout"><strong>¡Atención! No todo el soportal es «privado de uso público».</strong><p>La documentación distingue zonas con distinto régimen. La próxima Junta debe decidir cómo proteger la propiedad común y dejar constancia expresa de los usos que la comunidad autoriza.</p></div>
+				<div class="alert-callout"><strong>¡Atención! El soportal NO es «privado de uso público».</strong><p>La documentación distingue zonas con distinto régimen. La próxima Junta debe decidir cómo proteger la propiedad común y dejar constancia expresa de los usos que la comunidad autoriza.</p></div>
 				<div class="alert-actions"><a class="button primary" href="/documentos/aviso-propiedad-comunitaria-puerta-europa.pdf" target="_blank" rel="noopener">Consultar el aviso completo <span set:html={Icon({name:'file',size:18})}></span></a><span>Infórmate · Asiste · Decide</span></div>
 				<small class="alert-source">Fuentes: ficha PGOU PE-5 n.º 402; documentación notarial; informe jurídico comunitario (julio de 2026). La delimitación material deberá plasmarse técnicamente.</small>
 			</section>
@@ -125,4 +123,6 @@ const quickLinks = [
 	footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:34px 28px 45px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;color:var(--muted);font-size:12px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}.footer-brand .brand-mark{width:40px;height:40px}.footer-brand strong{font:600 16px Lora,serif}.footer-brand+ p{grid-column:2;margin:0}.footer-brand~a{grid-column:2;display:flex;align-items:center;gap:7px;color:var(--sage-dark);font-weight:600}.footer-brand~small{grid-column:1;grid-row:2;color:#999}
 	@media(max-width:900px){.quick-grid{grid-template-columns:repeat(2,1fr)}.news-grid{grid-template-columns:1fr 1fr}.news-grid .featured{grid-column:1/-1}.alert-grid,.legal-summary ol{grid-template-columns:1fr}.hero{grid-template-columns:1fr;padding-top:75px}.hero-copy{text-align:center}.hero-copy>p{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.hero-art{max-width:570px;width:100%;margin:auto}.documents{grid-template-columns:1fr}.paper-stack{width:300px;margin:auto}.site-header nav{display:none;position:absolute;top:78px;left:20px;right:20px;z-index:20;background:#fff;padding:20px;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);flex-direction:column;gap:20px}.site-header nav.open{display:flex}.menu{display:block}}
 	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}main{padding:0 18px}.hero{min-height:auto;padding:58px 0 30px;gap:38px}.hero h1{font-size:44px}.hero-copy>p{font-size:15px}.hero-art{height:260px}.b1{left:22px;transform:scale(.8);transform-origin:bottom}.b2{left:112px;transform:scale(.8);transform-origin:bottom}.b3{right:6px;transform:scale(.8);transform-origin:bottom}.t2{left:230px}.quick-grid{grid-template-columns:1fr;margin-bottom:70px}.quick-card{padding:15px}.section{padding-bottom:70px}.section-heading{align-items:start}.section-heading>a{font-size:0;margin-top:12px}.section h2,.documents h2{font-size:31px}.news-grid{grid-template-columns:1fr}.news-grid .featured{grid-column:auto}.community-alert{padding:27px 20px;margin-bottom:70px}.alert-heading{display:block}.alert-icon{margin-bottom:15px}.alert-heading h2{font-size:29px}.legal-summary{padding:20px}.alert-callout strong{font-size:19px}.alert-actions{align-items:flex-start;flex-direction:column}.documents{padding:40px 25px;margin-bottom:60px}.paper-stack{transform:scale(.88);transform-origin:left top;margin-bottom:-30px}footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-brand~*{grid-column:1;grid-row:auto}}
+	.hero-art{height:180px;border-radius:0;background:transparent;box-shadow:none}.hero-art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}.hero-art:hover img{transform:scale(1.01)}
+	@media(max-width:600px){.hero-art{height:130px}}
 </style>
