@@ -7,6 +7,7 @@ const Icon = ({ name, size = 24 }) => {
 		calendar: '<rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>',
 		wallet: '<path d="M20 7V6a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10H5a3 3 0 0 1-3-3V7"/><path d="M16 14h.01"/>',
 		users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+		elevator: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M12 7v10"/><path d="m9 9 3-3 3 3"/><path d="m9 15 3 3 3-3"/>',
 		phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
 		arrow: '<path d="m9 18 6-6-6-6"/>',
 		check: '<path d="M20 6 9 17l-5-5"/>',
@@ -15,10 +16,10 @@ const Icon = ({ name, size = 24 }) => {
 	return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
 };
 const quickLinks = [
-	{ icon: 'file', title: 'Documentos', text: 'Actas, estatutos y circulares', tone: 'sage' },
-	{ icon: 'wallet', title: 'Cuentas', text: 'Información económica', tone: 'blue' },
-	{ icon: 'calendar', title: 'Calendario', text: 'Juntas y fechas importantes', tone: 'sand' },
-	{ icon: 'users', title: 'Comunidad', text: 'Información para propietarios', tone: 'rose' },
+	{ icon: 'file', title: 'Documentos', text: 'Actas, estatutos y circulares', tone: 'sage', href: '#documentos' },
+	{ icon: 'wallet', title: 'Cuentas', text: 'Información económica', tone: 'blue', href: '#actualidad' },
+	{ icon: 'calendar', title: 'Calendario', text: 'Juntas y fechas importantes', tone: 'sand', href: '#actualidad' },
+	{ icon: 'elevator', title: 'Ascensores', text: 'Información para propietarios', tone: 'rose', href: '#ascensores' },
 ];
 ---
 
@@ -60,7 +61,7 @@ const quickLinks = [
 			</section>
 
 			<section class="quick-grid" aria-label="Accesos rápidos">
-				{quickLinks.map((item) => <a href={item.title === 'Documentos' ? '#documentos' : '#actualidad'} class={`quick-card ${item.tone}`}><span class="icon" set:html={Icon({name:item.icon,size:27})}></span><span><strong>{item.title}</strong><small>{item.text}</small></span><span class="go" set:html={Icon({name:'arrow',size:18})}></span></a>)}
+				{quickLinks.map((item) => <a href={item.href} class={`quick-card ${item.tone}`}><span class="icon" set:html={Icon({name:item.icon,size:27})}></span><span><strong>{item.title}</strong><small>{item.text}</small></span><span class="go" set:html={Icon({name:'arrow',size:18})}></span></a>)}
 			</section>
 
 			<section class="section" id="actualidad">
@@ -99,7 +100,12 @@ const quickLinks = [
 				<div><span class="eyebrow">Siempre disponible</span><h2>Toda la documentación<br/>en un mismo lugar</h2><p>Accede de forma rápida a la información relevante de la comunidad: actas, convocatorias, normativa y comunicaciones.</p><a class="button primary" href="#">Consultar documentos <span set:html={Icon({name:'arrow',size:18})}></span></a></div>
 				<div class="paper-stack"><div class="paper back"></div><div class="paper"><span class="paper-icon" set:html={Icon({name:'file',size:34})}></span><span class="line long"></span><span class="line"></span><span class="line short"></span><ul><li><span set:html={Icon({name:'check',size:15})}></span> Actas de reuniones</li><li><span set:html={Icon({name:'check',size:15})}></span> Circulares y avisos</li><li><span set:html={Icon({name:'check',size:15})}></span> Normativa comunitaria</li></ul></div></div>
 			</section>
-	</main>
+
+			<section class="elevators" id="ascensores">
+				<div class="elevators-heading"><div><span class="eyebrow">Información para propietarios</span><h2>Estado de los ascensores</h2><p>Resumen de modernización y resultados de las últimas inspecciones OCA registradas por portal.</p></div><a href="/images/EstadoAscensores.png" target="_blank" rel="noopener">Ver a tamaño completo <span set:html={Icon({name:'arrow',size:17})}></span></a></div>
+				<a class="elevators-image" href="/images/EstadoAscensores.png" target="_blank" rel="noopener" aria-label="Abrir el estado de los ascensores a tamaño completo"><img src="/images/EstadoAscensores.png" alt="Tabla del estado de modernización y resultados OCA de los ascensores por portal" width="1491" height="1055" loading="lazy" /></a>
+			</section>
+		</main>
 
 	<footer id="contacto"><div class="footer-brand"><span class="brand-mark" set:html={Icon({name:'home',size:25})}></span><div><strong>Puerta Europa</strong><small>Un espacio para todos</small></div></div><p>¿Necesitas ayuda o tienes alguna consulta?</p><a href="tel:+34000000000"><span set:html={Icon({name:'phone',size:18})}></span> Contactar con la administración</a><small>© 2026 Comunidad de Propietarios Puerta Europa</small></footer>
 		<script>
@@ -125,4 +131,6 @@ const quickLinks = [
 	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}main{padding:0 18px}.hero{min-height:auto;padding:58px 0 30px;gap:38px}.hero h1{font-size:44px}.hero-copy>p{font-size:15px}.hero-art{height:260px}.b1{left:22px;transform:scale(.8);transform-origin:bottom}.b2{left:112px;transform:scale(.8);transform-origin:bottom}.b3{right:6px;transform:scale(.8);transform-origin:bottom}.t2{left:230px}.quick-grid{grid-template-columns:1fr;margin-bottom:70px}.quick-card{padding:15px}.section{padding-bottom:70px}.section-heading{align-items:start}.section-heading>a{font-size:0;margin-top:12px}.section h2,.documents h2{font-size:31px}.news-grid{grid-template-columns:1fr}.news-grid .featured{grid-column:auto}.community-alert{padding:27px 20px;margin-bottom:70px}.alert-heading{display:block}.alert-icon{margin-bottom:15px}.alert-heading h2{font-size:29px}.legal-summary{padding:20px}.alert-callout strong{font-size:19px}.alert-actions{align-items:flex-start;flex-direction:column}.documents{padding:40px 25px;margin-bottom:60px}.paper-stack{transform:scale(.88);transform-origin:left top;margin-bottom:-30px}footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-brand~*{grid-column:1;grid-row:auto}}
 	.hero-art{height:180px;border-radius:0;background:transparent;box-shadow:none}.hero-art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}.hero-art:hover img{transform:scale(1.01)}
 	@media(max-width:600px){.hero-art{height:130px}}
+	.elevators{margin:0 0 100px;scroll-margin-top:24px}.elevators-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:25px}.elevators-heading h2{font:600 42px/1.12 Lora,serif;margin:0;letter-spacing:-.025em}.elevators-heading p{max-width:720px;margin:12px 0 0;color:var(--muted);font-size:14px}.elevators-heading>a{display:flex;align-items:center;gap:6px;flex:0 0 auto;color:var(--sage-dark);font-size:13px;font-weight:600}.elevators-image{display:block;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow);transition:.2s}.elevators-image:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(65,55,42,.12)}.elevators-image img{display:block;width:100%;height:auto}
+	@media(max-width:700px){.elevators{margin-bottom:65px}.elevators-heading{align-items:flex-start;flex-direction:column}.elevators-heading h2{font-size:31px}.elevators-heading>a{align-self:flex-start}.elevators-image{border-radius:11px;overflow-x:auto}.elevators-image img{width:900px;max-width:none}}
 </style>
