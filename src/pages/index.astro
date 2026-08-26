@@ -21,6 +21,60 @@ const quickLinks = [
 	{ icon: 'calendar', title: 'Calendario', text: 'Juntas y fechas importantes', tone: 'sand', href: '#actualidad' },
 	{ icon: 'elevator', title: 'Ascensores', text: 'Información para propietarios', tone: 'rose', href: '#ascensores' },
 ];
+
+const elevatorPortals = [
+	{
+		name: 'Lisboa 2',
+		rows: [
+			{ staircase: 'Escalera Izq', elevator: 'Ascensor Izq', rae: '18686', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '15/07/2026', next: 'Ene 2027' },
+			{ staircase: 'Escalera Izq', elevator: 'Ascensor Dch', rae: '18685', modernization: ['No modernizado', 'neutral'], oca: [['Desfavorable', 'danger']], date: '15/07/2026', next: 'Ene 2027' },
+			{ staircase: 'Escalera Dch', elevator: 'Ascensor Único', rae: '18684', modernization: ['No modernizado', 'neutral'], oca: [['Holgura', 'danger'], ['Desfavorable', 'danger']], date: '15/07/2026', next: 'Ene 2027' },
+		],
+	},
+	{
+		name: 'Amsterdam 10',
+		rows: [
+			{ staircase: 'Escalera Única', elevator: 'Ascensor Único', rae: '18683', modernization: ['No modernizado', 'neutral'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+		],
+	},
+	{
+		name: 'Amsterdam 8',
+		rows: [
+			{ staircase: 'Escalera Izq', elevator: 'Ascensor Único', rae: '18686', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Favorable sin defectos', 'good']], date: '15/07/2026', next: 'Jul 2030' },
+			{ staircase: 'Escalera Dch', elevator: 'Ascensor Izq', rae: '18681', modernization: ['Modernizado TRESA (2019-2021)', 'modernized'], oca: [['Favorable sin defectos', 'good']], date: '15/07/2026', next: 'Jul 2030' },
+			{ staircase: 'Escalera Dch', elevator: 'Ascensor Dch', rae: '18680', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+		],
+	},
+	{
+		name: 'Amsterdam 6',
+		rows: [
+			{ staircase: 'Escalera Izq', elevator: 'Ascensor Izq', rae: '18672', modernization: ['Modernizado TRESA (2019-2021)', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+			{ staircase: 'Escalera Izq', elevator: 'Ascensor Dch', rae: '18671', modernization: ['No modernizado', 'neutral'], oca: [['Favorable con defectos leves', 'warning']], date: '18/08/2026', next: 'Feb 2027' },
+			{ staircase: 'Escalera Dch', elevator: 'Ascensor Único', rae: '18670', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+		],
+	},
+	{
+		name: 'Amsterdam 4',
+		rows: [
+			{ staircase: 'Escalera Única', elevator: 'Ascensor Único', rae: '18669', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+		],
+	},
+	{
+		name: 'Atenas 1',
+		rows: [
+			{ staircase: 'Escalera Izq', elevator: 'Ascensor Único', rae: '18668', modernization: ['Modernizado (2023-2025)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+			{ staircase: 'Escalera Dch', elevator: 'Ascensor Izq', rae: '18667', modernization: ['Modernizado TRESA (2019-2021)?', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+			{ staircase: 'Escalera Dch', elevator: 'Ascensor Dch', rae: '18666', modernization: ['Modernizado (2023-2025)', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+		],
+	},
+];
+
+const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => {
+	if (rowIndex > 0 && rows[rowIndex - 1].staircase === rows[rowIndex].staircase) return 0;
+	let span = 1;
+	while (rows[rowIndex + span]?.staircase === rows[rowIndex].staircase) span++;
+	return span;
+};
 ---
 
 <!doctype html>
@@ -102,8 +156,35 @@ const quickLinks = [
 			</section>
 
 			<section class="elevators" id="ascensores">
-				<div class="elevators-heading"><div><span class="eyebrow">Información para propietarios</span><h2>Estado de los ascensores</h2><p>Resumen de modernización y resultados de las últimas inspecciones OCA registradas por portal.</p></div><a href="/images/EstadoAscensores.png" target="_blank" rel="noopener">Ver a tamaño completo <span set:html={Icon({name:'arrow',size:17})}></span></a></div>
-				<a class="elevators-image" href="/images/EstadoAscensores.png" target="_blank" rel="noopener" aria-label="Abrir el estado de los ascensores a tamaño completo"><img src="/images/EstadoAscensores.png" alt="Tabla del estado de modernización y resultados OCA de los ascensores por portal" width="1491" height="1055" loading="lazy" /></a>
+				<div class="elevators-heading"><div><span class="eyebrow">Ascensores</span><h2>Estado de ascensores por portal</h2><p>Resumen de modernización y resultados OCA</p></div><span class="elevator-heading-mark" set:html={Icon({name:'elevator',size:64})}></span></div>
+				<div class="elevator-board">
+					<div class="table-wrap" tabindex="0" aria-label="Tabla desplazable del estado de los ascensores">
+						<table class="elevator-table">
+							<thead>
+								<tr><th rowspan="2">Portal</th><th rowspan="2">Escalera</th><th rowspan="2">Ascensor</th><th rowspan="2"><abbr title="Registro de Aparatos Elevadores">RAE</abbr></th><th rowspan="2">Modernización</th><th colspan="3" class="oca-group">OCA</th></tr>
+								<tr><th>Resultado OCA</th><th>Fecha OCA</th><th>Siguiente OCA</th></tr>
+							</thead>
+							{elevatorPortals.map((portal) => (
+								<tbody>
+									{portal.rows.map((row, rowIndex) => {
+										const stairRows = staircaseSpan(portal.rows, rowIndex);
+										return <tr>
+											{rowIndex === 0 && <th class="portal-cell" scope="rowgroup" rowspan={portal.rows.length}>{portal.name}</th>}
+											{stairRows > 0 && <td class="staircase-cell" rowspan={stairRows}>{row.staircase}</td>}
+											<td>{row.elevator}</td>
+											<td>{row.rae}</td>
+											<td><span class={`status-pill ${row.modernization[1]}`}>{row.modernization[0]}</span></td>
+											<td><span class="status-list">{row.oca.length ? row.oca.map((status) => <span class={`status-pill ${status[1]}`}>{status[0]}</span>) : <span class="empty-value">—</span>}</span></td>
+											<td>{row.date}</td>
+											<td>{row.next}</td>
+										</tr>;
+									})}
+								</tbody>
+							))}
+						</table>
+					</div>
+				</div>
+				<div class="elevator-note"><span aria-hidden="true">i</span><p>Los resultados OCA corresponden a la última inspección registrada. Los datos proceden de la observación de etiquetas y actas de la comunidad; pueden contener errores. <strong>Información orientativa.</strong></p></div>
 			</section>
 		</main>
 
@@ -131,6 +212,6 @@ const quickLinks = [
 	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}main{padding:0 18px}.hero{min-height:auto;padding:58px 0 30px;gap:38px}.hero h1{font-size:44px}.hero-copy>p{font-size:15px}.hero-art{height:260px}.b1{left:22px;transform:scale(.8);transform-origin:bottom}.b2{left:112px;transform:scale(.8);transform-origin:bottom}.b3{right:6px;transform:scale(.8);transform-origin:bottom}.t2{left:230px}.quick-grid{grid-template-columns:1fr;margin-bottom:70px}.quick-card{padding:15px}.section{padding-bottom:70px}.section-heading{align-items:start}.section-heading>a{font-size:0;margin-top:12px}.section h2,.documents h2{font-size:31px}.news-grid{grid-template-columns:1fr}.news-grid .featured{grid-column:auto}.community-alert{padding:27px 20px;margin-bottom:70px}.alert-heading{display:block}.alert-icon{margin-bottom:15px}.alert-heading h2{font-size:29px}.legal-summary{padding:20px}.alert-callout strong{font-size:19px}.alert-actions{align-items:flex-start;flex-direction:column}.documents{padding:40px 25px;margin-bottom:60px}.paper-stack{transform:scale(.88);transform-origin:left top;margin-bottom:-30px}footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-brand~*{grid-column:1;grid-row:auto}}
 	.hero-art{height:180px;border-radius:0;background:transparent;box-shadow:none}.hero-art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}.hero-art:hover img{transform:scale(1.01)}
 	@media(max-width:600px){.hero-art{height:130px}}
-	.elevators{margin:0 0 100px;scroll-margin-top:24px}.elevators-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:25px}.elevators-heading h2{font:600 42px/1.12 Lora,serif;margin:0;letter-spacing:-.025em}.elevators-heading p{max-width:720px;margin:12px 0 0;color:var(--muted);font-size:14px}.elevators-heading>a{display:flex;align-items:center;gap:6px;flex:0 0 auto;color:var(--sage-dark);font-size:13px;font-weight:600}.elevators-image{display:block;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow);transition:.2s}.elevators-image:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(65,55,42,.12)}.elevators-image img{display:block;width:100%;height:auto}
-	@media(max-width:700px){.elevators{margin-bottom:65px}.elevators-heading{align-items:flex-start;flex-direction:column}.elevators-heading h2{font-size:31px}.elevators-heading>a{align-self:flex-start}.elevators-image{border-radius:11px;overflow-x:auto}.elevators-image img{width:900px;max-width:none}}
+	.elevators{margin:0 0 100px;scroll-margin-top:24px}.elevators-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:25px;padding:0 14px}.elevators-heading .eyebrow{margin-bottom:9px}.elevators-heading .eyebrow:after{content:'';display:block;width:45px;height:1px;margin-top:12px;background:var(--terracotta)}.elevators-heading h2{font:600 clamp(38px,4.3vw,60px)/1.08 Lora,serif;margin:0;letter-spacing:-.035em}.elevators-heading p{max-width:720px;margin:14px 0 0;color:#49615d;font-size:17px}.elevator-heading-mark{display:grid;place-items:center;width:145px;height:115px;border-bottom:1px solid #cdd5ce;color:var(--sage-dark);background:radial-gradient(circle,#eef1ec 0,transparent 70%);opacity:.78}.elevator-board{overflow:hidden;border:1px solid #deded6;border-radius:17px;background:rgba(255,255,255,.78);box-shadow:0 10px 28px rgba(60,50,40,.07)}.table-wrap{overflow-x:auto;scrollbar-color:var(--sage) #f1eee8}.table-wrap:focus-visible{outline:3px solid rgba(82,111,96,.35);outline-offset:3px}.elevator-table{width:100%;min-width:1080px;border-collapse:collapse;table-layout:fixed;font-size:13px}.elevator-table th,.elevator-table td{padding:11px 10px;border-right:1px solid #e3e0d9;border-top:1px solid #e3e0d9;text-align:center;vertical-align:middle}.elevator-table tr>*:last-child{border-right:0}.elevator-table thead th{background:rgba(247,246,241,.92);color:#18302b;font-size:12px;font-weight:600;white-space:nowrap}.elevator-table thead tr:first-child th{border-top:0}.elevator-table thead th[rowspan]{vertical-align:middle}.elevator-table thead .oca-group{background:#f1f2ec;font-size:14px;letter-spacing:.04em}.elevator-table th abbr{text-decoration:none}.elevator-table th:nth-child(1){width:12.5%}.elevator-table th:nth-child(2){width:11.5%}.elevator-table th:nth-child(3){width:12%}.elevator-table th:nth-child(4){width:8%}.elevator-table th:nth-child(5){width:20%}.elevator-table tbody+tbody tr:first-child>*{border-top:1.5px solid #d6d3cb}.elevator-table tbody tr:hover td,.elevator-table tbody tr:hover th{background:#fbfaf6}.portal-cell{padding-left:16px!important;background:rgba(253,252,249,.8);color:#182622;font:600 16px Lora,serif;text-align:left!important}.staircase-cell{background:rgba(253,252,249,.55)}.elevator-table td:nth-last-child(-n+2){white-space:nowrap}.status-list{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap}.status-pill{display:inline-flex;align-items:center;gap:6px;width:max-content;max-width:100%;padding:5px 9px;border:1px solid;border-radius:999px;font-size:11px;line-height:1.25;white-space:nowrap}.status-pill:before{display:grid;place-items:center;width:15px;height:15px;border:1px solid currentColor;border-radius:50%;font-size:10px;font-weight:700;line-height:1;flex:0 0 auto}.status-pill.modernized,.status-pill.good{border-color:#cbdcca;background:#f1f7f0;color:#345f47}.status-pill.modernized:before{content:'✓'}.status-pill.good:before{content:'✓'}.status-pill.neutral{border-color:#ddd6cc;background:#f8f5f0;color:#665e55}.status-pill.neutral:before{content:'−'}.status-pill.danger{border-color:#f2c7bd;background:#fff4f1;color:#d43d28}.status-pill.danger:before{content:'!'}.status-pill.warning{border-color:#ead5aa;background:#fff9eb;color:#8b641f}.status-pill.warning:before{content:'!'}.empty-value{color:#60706c}.elevator-note{display:flex;align-items:flex-start;gap:12px;margin-top:16px;padding:15px 18px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.72)}.elevator-note>span{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--sage-dark);color:#fff;font:600 15px Lora,serif;flex:0 0 auto}.elevator-note p{margin:1px 0 0;color:#526662;font-size:12px}.elevator-note strong{color:var(--ink)}
+	@media(max-width:760px){.elevators{margin-bottom:65px}.elevators-heading{align-items:flex-start;padding:0}.elevators-heading h2{font-size:34px}.elevators-heading p{font-size:14px}.elevator-heading-mark{display:none}.elevator-board{margin-right:-18px;border-radius:14px 0 0 14px}.table-wrap{padding-bottom:7px}.elevator-table{min-width:1020px;font-size:12px}.elevator-table th,.elevator-table td{padding:10px 8px}.elevator-note{padding:14px}.elevator-note p{font-size:11px}}
 </style>
