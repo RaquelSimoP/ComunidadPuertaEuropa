@@ -17,7 +17,7 @@ const Icon = ({ name, size = 24 }: { name: string; size?: number }) => {
 	return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name as keyof typeof paths]}</svg>`;
 };
 const quickLinks = [
-	{ icon: 'file', title: 'Documentos', text: 'Actas, estatutos y circulares', tone: 'sage', href: '#documentos' },
+	{ icon: 'bell', title: 'Avisos', text: 'Información importante', tone: 'sage', href: '#aviso-propiedad' },
 	{ icon: 'calendar', title: 'Calendario', text: 'Seguimiento de actuaciones', tone: 'sand', href: '#calendario' },
 	{ icon: 'help', title: 'Preguntas y respuestas', text: 'Aclaraciones de la comunidad', tone: 'blue', href: '/preguntas/' },
 	{ icon: 'elevator', title: 'Ascensores', text: 'Información para propietarios', tone: 'rose', href: '/ascensores/' },
@@ -493,7 +493,7 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 				<span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span>
 			</a>
 			<nav aria-label="Navegación principal">
-				<a class="active" href="#inicio">Inicio</a><a href="#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a href="/ascensores/">Ascensores</a><a href="#documentos">Documentos</a><a href="#contacto">Contacto</a>
+				<a class="active" href="#inicio">Inicio</a><a href="#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a href="/ascensores/">Ascensores</a><a href="#aviso-propiedad">Avisos</a><a href="#contacto">Contacto</a>
 			</nav>
 			<button class="menu" aria-label="Abrir menú" aria-expanded="false" set:html={Icon({ name: 'menu' })}></button>
 		</header>
@@ -504,7 +504,7 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 					<span class="eyebrow">Tu comunidad, más cerca</span>
 					<h1>Bienvenidos a<br/><em>Puerta Europa</em></h1>
 					<p>Un espacio común para consultar información, documentos y novedades de nuestra comunidad de forma clara y sencilla.</p>
-					<div class="hero-actions"><a class="button primary" href="#calendario">Ver calendario <span set:html={Icon({name:'arrow',size:18})}></span></a><a class="button ghost" href="#documentos">Ir a documentos</a></div>
+					<div class="hero-actions"><a class="button primary" href="#calendario">Ver calendario <span set:html={Icon({name:'arrow',size:18})}></span></a><a class="button ghost" href="#aviso-propiedad">Ver avisos</a></div>
 				</div>
 				<div class="hero-art">
 					<img src="/images/casitas.webp" alt="Ilustración de viviendas y jardines" width="779" height="132" />
@@ -634,14 +634,14 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 					<span class="alert-icon" set:html={Icon({name:'bell',size:25})}></span>
 					<div><span class="eyebrow">Aviso 3 de 3 · Próximamente</span><h2>Lo que podemos hacer</h2><p>Este aviso recogerá las opciones que la Comunidad puede considerar para proteger la zona privada, regular los usos y actuar frente a molestias respetando la normativa.</p></div>
 				</div>
-				<div class="alert-actions"><a class="button ghost" href="#documentos">Ir a documentos relacionados</a><span>Información pendiente · Actualización en Junta</span></div>
+				<div class="alert-actions"><a class="button ghost" href="#aviso-propiedad">Ver avisos relacionados</a><span>Información pendiente · Actualización en Junta</span></div>
 				<small class="alert-source">Próximo aviso: publicación tras la validación de opciones y propuestas técnicas.</small>
 			</section>
 			<div class="back-to-top-wrap"><a class="back-to-top" href="#inicio">Volver al inicio <span aria-hidden="true">&uarr;</span></a></div>
 
-			<section class="documents" id="documentos">
-				<div><span class="eyebrow">Siempre disponible</span><h2>Toda la documentación<br/>en un mismo lugar</h2><p>Accede de forma rápida a la información relevante de la comunidad: actas, convocatorias, normativa y comunicaciones.</p><a class="button primary" href="#">Consultar documentos <span set:html={Icon({name:'arrow',size:18})}></span></a></div>
-				<div class="paper-stack"><div class="paper back"></div><div class="paper"><span class="paper-icon" set:html={Icon({name:'file',size:34})}></span><span class="line long"></span><span class="line"></span><span class="line short"></span><ul><li><span set:html={Icon({name:'check',size:15})}></span> Actas de reuniones</li><li><span set:html={Icon({name:'check',size:15})}></span> Circulares y avisos</li><li><span set:html={Icon({name:'check',size:15})}></span> Normativa comunitaria</li></ul></div></div>
+			<section class="documents questions-promo">
+				<div><span class="eyebrow">Preguntas y respuestas</span><h2>Entender la situación<br/><em>para decidir mejor</em></h2><p>Respuestas claras a las dudas más habituales sobre el soportal, los accesos, las molestias y el trabajo que queda por hacer.</p><a class="button primary" href="/preguntas/">Ver preguntas y respuestas <span set:html={Icon({name:'arrow',size:18})}></span></a></div>
+				<div class="paper-stack questions-stack"><div class="paper back"></div><div class="paper"><span class="paper-icon question-mark">?</span><span class="line long"></span><span class="line"></span><span class="line short"></span><ul><li><span set:html={Icon({name:'check',size:15})}></span> Propiedad y uso del soportal</li><li><span set:html={Icon({name:'check',size:15})}></span> Accesos y convivencia</li><li><span set:html={Icon({name:'check',size:15})}></span> Opciones de la Comunidad</li></ul></div></div>
 			</section>
 			<div class="back-to-top-wrap"><a class="back-to-top" href="#inicio">Volver al inicio <span aria-hidden="true">&uarr;</span></a></div>
 
@@ -749,4 +749,5 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 	@media(max-width:600px){.back-to-top-wrap{margin:-52px auto 48px;padding:0 18px}.back-to-top{font-size:10px}}
 	.avisos-nav{width:calc(100% - 48px);max-width:1180px;margin-left:auto;margin-right:auto}.aviso-card{text-align:center}.aviso-card-top{position:relative;justify-content:center}.aviso-card-number{position:absolute;top:-2px;right:0}.aviso-card strong{max-width:none}.aviso-card-link{text-align:center}
 	main{display:flex;flex-direction:column}main>.hero{order:1}main>.avisos-nav{order:2}main>.quick-grid{order:3}main>#aviso-propiedad{order:4}main>#aviso-propiedad+.back-to-top-wrap{order:5}main>#aviso-informe-juridico{order:6}main>#aviso-informe-juridico+.back-to-top-wrap{order:7}main>#aviso-accion{order:8}main>#aviso-accion+.back-to-top-wrap{order:9}main>.calendar-section{order:10}main>.calendar-section+.back-to-top-wrap{order:11}main>.documents{order:12}main>.documents+.back-to-top-wrap{order:13}main>.elevators{order:14}main>.elevators+.back-to-top-wrap{order:15}
+	main>.questions-promo{order:14}main>.questions-promo+.back-to-top-wrap{order:15}.questions-promo h2 em{font-style:normal;color:var(--sage-dark)}.questions-stack .question-mark{font:600 34px Lora,serif;color:var(--terracotta-dark)}
 </style>
