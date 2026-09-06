@@ -1,0 +1,82 @@
+---
+const Icon = ({ name, size = 24 }: { name: 'home' | 'phone' | 'calendar'; size?: number }) => {
+	const paths = {
+		home: '<path d="m3 11 9-9 9 9"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>',
+		phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 1 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 1 2.81.7A2 2 0 0 1 22 16.92z"/>',
+		calendar: '<rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>',
+	};
+	return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
+};
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="Formulario de contacto de la Comunidad de Propietarios Puerta Europa." />
+		<title>Contacto · Comunidad Puerta Europa</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@500;600&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="/#inicio" aria-label="Puerta Europa, inicio"><span class="brand-mark" set:html={Icon({ name: 'home', size: 25 })}></span><span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span></a>
+			<nav aria-label="Navegación principal"><a href="/#inicio">Inicio</a><a href="/#aviso-propiedad">Avisos</a><a href="/#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a></nav>
+			<a class="mobile-home" href="/#inicio" aria-label="Volver al inicio">Inicio</a>
+		</header>
+
+		<main>
+			<section class="contact-layout">
+				<div class="contact-intro"><span class="eyebrow">Contacta con la Comisión</span><h1>Estamos aquí para<br /><em>escucharte</em></h1><p>Rellena el formulario y podremos responderte con la información disponible sobre la Comunidad.</p><div class="contact-note"><span set:html={Icon({name:'phone',size:20})}></span><span>Los campos marcados con <strong>*</strong> son obligatorios.</span></div></div>
+				<form class="contact-form" id="contact-form">
+					<div class="form-heading"><span class="eyebrow">Formulario de contacto</span><h2>Cuéntanos tu consulta</h2></div>
+					<div class="form-grid"><label>Nombre <span>*</span><input name="nombre" type="text" autocomplete="given-name" required /></label><label>Apellidos <span>*</span><input name="apellidos" type="text" autocomplete="family-name" required /></label></div>
+					<label>Piso o dirección completa <span>*</span><input name="direccion" type="text" autocomplete="street-address" required /></label>
+					<label>Correo electrónico <span>*</span><input name="email" type="email" autocomplete="email" inputmode="email" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" title="Introduce un correo electrónico válido, por ejemplo nombre@dominio.es" required /><small>Lo usaremos para contestarte.</small></label>
+					<label>Consulta <small>(opcional)</small><textarea name="consulta" rows="5"></textarea></label>
+					<button class="button primary" type="submit">Enviar consulta <span aria-hidden="true">→</span></button>
+					<p class="form-status" role="status" hidden>Se ha preparado el correo en tu aplicación de correo. Revisa el mensaje y pulsa “Enviar”.</p>
+				</form>
+			</section>
+			<div class="back-link"><a href="/#inicio">Volver al inicio <span aria-hidden="true">↑</span></a></div>
+		</main>
+
+		<footer id="contacto">
+			<div class="footer-brand"><span class="brand-mark" set:html={Icon({ name: 'home', size: 25 })}></span><div><strong>Comisión de Vecinos de Puerta Europa</strong><small>Un espacio para todos</small></div></div>
+			<div class="footer-legal"><strong>Información legal</strong><p>Este sitio tiene carácter informativo y recoge la actividad y documentación elaborada por la Comisión. La información publicada no constituye asesoramiento jurídico.</p><p>La Comisión es responsable de los contenidos publicados y revisa su actualización con la información disponible en cada momento.</p></div>
+			<div class="footer-contact"><p>¿Necesitas ayuda o tienes alguna consulta?</p><a href="/contacto/"><span set:html={Icon({ name: 'phone', size: 18 })}></span> Contacta con nosotros</a></div>
+			<div class="footer-meta"><small class="ai-disclosure">El formato de esta web se ha generado con IA. El contenido es original de la Comisión.</small><small>© 2026 Comisión de Vecinos de Puerta Europa</small></div>
+		</footer>
+
+		<script>
+			const form = document.querySelector<HTMLFormElement>('#contact-form');
+			const status = document.querySelector<HTMLElement>('.form-status');
+			const recipient = 'noterrazacuore@gmail.com';
+			form?.addEventListener('submit', (event) => {
+				if (!form.checkValidity()) return;
+				event.preventDefault();
+				const data = new FormData(form);
+				const body = [
+					`Nombre: ${data.get('nombre')}`,
+					`Apellidos: ${data.get('apellidos')}`,
+					`Piso o dirección completa: ${data.get('direccion')}`,
+					`Correo electrónico: ${data.get('email')}`,
+					`Consulta: ${data.get('consulta') || 'No indicada'}`,
+				].join('\n\n');
+				window.location.href = `mailto:${recipient}?subject=${encodeURIComponent('Consulta de la Comunidad Puerta Europa')}&body=${encodeURIComponent(body)}`;
+				if (status) status.hidden = false;
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	:root{--sage:#879a8a;--sage-dark:#526f60;--terracotta:#d9987a;--terracotta-dark:#ae5f45;--ink:#20231f;--muted:#6e736e;--cream:#fbfaf7;--line:#e9e3da;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--cream)}
+	*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 92% 0,#f7eee7 0,transparent 29rem),var(--cream);line-height:1.55}a{color:inherit;text-decoration:none}.site-header{height:88px;max-width:1240px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(135,154,138,.22)}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#9cae9f,#637e6e)}.brand strong{font:600 21px/1.1 Lora,serif;display:block}.brand small,.footer-brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}.site-header nav{display:flex;gap:28px;font-size:14px;color:#555c57}.site-header nav a:hover{color:var(--sage-dark)}.mobile-home{display:none}
+	main{max-width:1184px;margin:auto;padding:0 28px}.contact-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center;padding:75px 0 55px}.eyebrow{display:inline-block;color:var(--terracotta-dark);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:13px}.contact-intro h1{font:600 clamp(44px,5vw,70px)/1.06 Lora,serif;margin:0;letter-spacing:-.035em}.contact-intro h1 em{font-style:normal;color:var(--sage-dark)}.contact-intro>p{max-width:450px;margin:24px 0;color:var(--muted);font-size:17px}.contact-note{display:flex;align-items:center;gap:10px;color:var(--sage-dark);font-size:13px}.contact-note span:first-child{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#f2ded8;color:var(--terracotta-dark)}.contact-form{padding:34px 38px;border:1px solid #e5d7bc;border-radius:22px;background:linear-gradient(145deg,#fffdf8,#f7f0e6);box-shadow:0 12px 30px rgba(84,67,48,.07)}.form-heading h2{margin:0 0 24px;font:600 31px/1.15 Lora,serif}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}label{display:block;margin:0 0 16px;color:#44534c;font-size:13px;font-weight:600}label>span{color:var(--terracotta-dark)}label small{display:block;margin-top:4px;color:#89918b;font-size:11px;font-weight:400}input,textarea{display:block;width:100%;margin-top:7px;padding:12px 13px;border:1px solid #d9d8cf;border-radius:8px;background:rgba(255,255,255,.82);color:var(--ink);font:400 14px 'DM Sans',sans-serif}textarea{resize:vertical;min-height:110px}input:focus,textarea:focus{outline:3px solid rgba(135,154,138,.25);border-color:var(--sage-dark)}input:user-invalid{border-color:#b96b5d;background:#fff8f6}.button{display:inline-flex;align-items:center;gap:9px;border:0;border-radius:9px;padding:13px 21px;font:600 14px 'DM Sans',sans-serif;cursor:pointer}.button.primary{background:var(--sage-dark);color:#fff;box-shadow:0 8px 18px rgba(82,111,96,.2)}.button:disabled{cursor:default;opacity:.65}.form-status{margin:16px 0 0;padding:12px 14px;border-radius:8px;background:#e7f0e8;color:#41654c;font-size:13px}.back-link{margin:0 0 70px;text-align:right}.back-link a{color:var(--sage-dark);font-size:12px;font-weight:600}.back-link a span{font-size:16px;margin-left:3px}
+	footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:34px 28px 45px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:24px 48px;color:var(--muted);font-size:12px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}.footer-brand .brand-mark{width:40px;height:40px}.footer-brand strong{font:600 16px Lora,serif}.footer-legal{grid-column:1;max-width:650px;color:#8b908b;font-size:11px;opacity:.82}.footer-legal strong{display:block;margin-bottom:4px;color:#737a74;font-size:11px;font-weight:500}.footer-legal p{margin:3px 0;line-height:1.45}.footer-contact{grid-column:2;grid-row:1 / span 2;align-self:center}.footer-contact p{margin:0 0 8px}.footer-contact a{display:flex;align-items:center;gap:7px;color:var(--sage-dark);font-weight:600}.footer-meta{grid-column:1;display:flex;flex-direction:column;gap:4px;color:#999}.footer-meta small{font-size:11px}.footer-meta .ai-disclosure{color:#858b85;max-width:650px}
+	@media(max-width:850px){.site-header nav{gap:14px}.contact-layout{grid-template-columns:1fr;gap:35px;padding-top:55px}.contact-intro>p{font-size:15px}.contact-form{max-width:700px}}
+	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}.site-header nav{display:none}.mobile-home{display:block;color:var(--sage-dark);font-size:12px;font-weight:600}main{padding:0 18px}.contact-layout{padding:45px 0 35px}.contact-intro h1{font-size:43px}.contact-form{padding:25px 20px}.form-grid{grid-template-columns:1fr}footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-legal,footer .footer-contact,footer .footer-meta{grid-column:1;grid-row:auto}.footer-contact{align-self:start}}
+</style>
