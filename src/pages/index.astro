@@ -20,7 +20,7 @@ const quickLinks = [
 	{ icon: 'file', title: 'Documentos', text: 'Actas, estatutos y circulares', tone: 'sage', href: '#documentos' },
 	{ icon: 'calendar', title: 'Calendario', text: 'Seguimiento de actuaciones', tone: 'sand', href: '#calendario' },
 	{ icon: 'help', title: 'Preguntas y respuestas', text: 'Aclaraciones de la comunidad', tone: 'blue', href: '/preguntas/' },
-	{ icon: 'elevator', title: 'Ascensores', text: 'Información para propietarios', tone: 'rose', href: '#ascensores' },
+	{ icon: 'elevator', title: 'Ascensores', text: 'Información para propietarios', tone: 'rose', href: '/ascensores/' },
 ];
 
 const calendarTags = [
@@ -493,7 +493,7 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 				<span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span>
 			</a>
 			<nav aria-label="Navegación principal">
-				<a class="active" href="#inicio">Inicio</a><a href="#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a href="#documentos">Documentos</a><a href="#contacto">Contacto</a>
+				<a class="active" href="#inicio">Inicio</a><a href="#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a href="/ascensores/">Ascensores</a><a href="#documentos">Documentos</a><a href="#contacto">Contacto</a>
 			</nav>
 			<button class="menu" aria-label="Abrir menú" aria-expanded="false" set:html={Icon({ name: 'menu' })}></button>
 		</header>
@@ -645,38 +645,6 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 			</section>
 			<div class="back-to-top-wrap"><a class="back-to-top" href="#inicio">Volver al inicio <span aria-hidden="true">&uarr;</span></a></div>
 
-			<section class="elevators" id="ascensores">
-				<div class="elevators-heading"><div><span class="eyebrow">Ascensores</span><h2>Estado de ascensores por portal</h2><p>Resumen de modernización y resultados OCA</p></div><span class="elevator-heading-mark" set:html={Icon({name:'elevator',size:64})}></span></div>
-				<div class="elevator-board">
-					<div class="table-wrap" tabindex="0" aria-label="Tabla desplazable del estado de los ascensores">
-						<table class="elevator-table">
-							<thead>
-								<tr><th rowspan="2">Portal</th><th rowspan="2">Escalera</th><th rowspan="2">Ascensor</th><th rowspan="2"><abbr title="Registro de Aparatos Elevadores">RAE</abbr></th><th rowspan="2">Modernización</th><th colspan="3" class="oca-group">OCA</th></tr>
-								<tr><th>Resultado OCA</th><th>Fecha OCA</th><th>Siguiente OCA</th></tr>
-							</thead>
-							{elevatorPortals.map((portal) => (
-								<tbody>
-									{portal.rows.map((row, rowIndex) => {
-										const stairRows = staircaseSpan(portal.rows, rowIndex);
-										return <tr>
-											{rowIndex === 0 && <th class="portal-cell" scope="rowgroup" rowspan={portal.rows.length}>{portal.name}</th>}
-											{stairRows > 0 && <td class="staircase-cell" rowspan={stairRows}>{row.staircase}</td>}
-											<td>{row.elevator}</td>
-											<td>{row.rae}</td>
-											<td><span class={`status-pill ${row.modernization[1]}`}>{row.modernization[0]}</span></td>
-											<td><span class="status-list">{row.oca.length ? row.oca.map((status) => <span class={`status-pill ${status[1]}`}>{status[0]}</span>) : <span class="empty-value">—</span>}</span></td>
-											<td>{row.date}</td>
-											<td>{row.next}</td>
-										</tr>;
-									})}
-								</tbody>
-							))}
-						</table>
-					</div>
-				</div>
-				<div class="elevator-note"><span aria-hidden="true">i</span><p>Los resultados OCA corresponden a la última inspección registrada. Los datos proceden de la observación de etiquetas y actas de la comunidad; pueden contener errores. <strong>Información orientativa.</strong></p></div>
-			</section>
-			<div class="back-to-top-wrap"><a class="back-to-top" href="#inicio">Volver al inicio <span aria-hidden="true">&uarr;</span></a></div>
 		</main>
 
 	<footer id="contacto">
@@ -780,4 +748,5 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 	.back-to-top-wrap{max-width:1240px;margin:-82px auto 78px;padding:0 28px;text-align:right}.back-to-top{display:inline-block;color:var(--sage-dark);font-size:11px;font-weight:600;letter-spacing:.03em;opacity:.78;transition:opacity .2s ease,transform .2s ease}.back-to-top:hover{opacity:1;transform:translateY(-2px)}.back-to-top span{font-size:15px;margin-left:3px}
 	@media(max-width:600px){.back-to-top-wrap{margin:-52px auto 48px;padding:0 18px}.back-to-top{font-size:10px}}
 	.avisos-nav{width:calc(100% - 48px);max-width:1180px;margin-left:auto;margin-right:auto}.aviso-card{text-align:center}.aviso-card-top{position:relative;justify-content:center}.aviso-card-number{position:absolute;top:-2px;right:0}.aviso-card strong{max-width:none}.aviso-card-link{text-align:center}
+	main{display:flex;flex-direction:column}main>.hero{order:1}main>.avisos-nav{order:2}main>.quick-grid{order:3}main>#aviso-propiedad{order:4}main>#aviso-propiedad+.back-to-top-wrap{order:5}main>#aviso-informe-juridico{order:6}main>#aviso-informe-juridico+.back-to-top-wrap{order:7}main>#aviso-accion{order:8}main>#aviso-accion+.back-to-top-wrap{order:9}main>.calendar-section{order:10}main>.calendar-section+.back-to-top-wrap{order:11}main>.documents{order:12}main>.documents+.back-to-top-wrap{order:13}main>.elevators{order:14}main>.elevators+.back-to-top-wrap{order:15}
 </style>

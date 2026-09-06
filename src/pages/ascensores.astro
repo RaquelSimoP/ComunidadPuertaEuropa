@@ -1,0 +1,104 @@
+---
+const Icon = ({ name, size = 24 }: { name: 'home' | 'phone' | 'elevator'; size?: number }) => {
+	const paths = {
+		home: '<path d="m3 11 9-9 9 9"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>',
+		phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 1 2.81.7A2 2 0 0 1 22 16.92z"/>',
+		elevator: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M12 7v10"/><path d="m9 9 3-3 3 3"/><path d="m9 15 3 3 3-3"/>',
+	};
+	return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
+};
+
+const elevatorPortals = [
+	{ name: 'Lisboa 2', rows: [
+		{ staircase: 'Escalera Izq', elevator: 'Ascensor Izq', rae: '18686', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '15/07/2026', next: 'Ene 2027' },
+		{ staircase: 'Escalera Izq', elevator: 'Ascensor Dch', rae: '18685', modernization: ['No modernizado', 'neutral'], oca: [['Desfavorable', 'danger']], date: '15/07/2026', next: 'Ene 2027' },
+		{ staircase: 'Escalera Dch', elevator: 'Ascensor Único', rae: '18684', modernization: ['No modernizado', 'neutral'], oca: [['Holgura', 'danger'], ['Desfavorable', 'danger']], date: '15/07/2026', next: 'Ene 2027' },
+	] },
+	{ name: 'Amsterdam 10', rows: [
+		{ staircase: 'Escalera Única', elevator: 'Ascensor Único', rae: '18683', modernization: ['No modernizado', 'neutral'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+	] },
+	{ name: 'Amsterdam 8', rows: [
+		{ staircase: 'Escalera Izq', elevator: 'Ascensor Único', rae: '18686', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Favorable sin defectos', 'good']], date: '15/07/2026', next: 'Jul 2030' },
+		{ staircase: 'Escalera Dch', elevator: 'Ascensor Izq', rae: '18681', modernization: ['Modernizado TRESA (2019-2021)', 'modernized'], oca: [['Favorable sin defectos', 'good']], date: '15/07/2026', next: 'Jul 2030' },
+		{ staircase: 'Escalera Dch', elevator: 'Ascensor Dch', rae: '18680', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+	] },
+	{ name: 'Amsterdam 6', rows: [
+		{ staircase: 'Escalera Izq', elevator: 'Ascensor Izq', rae: '18672', modernization: ['Modernizado TRESA (2019-2021)', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+		{ staircase: 'Escalera Izq', elevator: 'Ascensor Dch', rae: '18671', modernization: ['No modernizado', 'neutral'], oca: [['Favorable con defectos leves', 'warning']], date: '18/08/2026', next: 'Feb 2027' },
+		{ staircase: 'Escalera Dch', elevator: 'Ascensor Único', rae: '18670', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+	] },
+	{ name: 'Amsterdam 4', rows: [
+		{ staircase: 'Escalera Única', elevator: 'Ascensor Único', rae: '18669', modernization: ['Modernizado (2022-2024)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+	] },
+	{ name: 'Atenas 1', rows: [
+		{ staircase: 'Escalera Izq', elevator: 'Ascensor Único', rae: '18668', modernization: ['Modernizado (2023-2025)', 'modernized'], oca: [['Desfavorable', 'danger']], date: '18/08/2026', next: 'Feb 2027' },
+		{ staircase: 'Escalera Dch', elevator: 'Ascensor Izq', rae: '18667', modernization: ['Modernizado TRESA (2019-2021)?', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+		{ staircase: 'Escalera Dch', elevator: 'Ascensor Dch', rae: '18666', modernization: ['Modernizado (2023-2025)', 'modernized'], oca: [], date: '—', next: 'Ago 2026' },
+	] },
+];
+
+const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => {
+	if (rowIndex > 0 && rows[rowIndex - 1].staircase === rows[rowIndex].staircase) return 0;
+	let span = 1;
+	while (rows[rowIndex + span]?.staircase === rows[rowIndex].staircase) span++;
+	return span;
+};
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="Estado de los ascensores de la Comunidad de Propietarios Puerta Europa." />
+		<title>Ascensores · Comunidad Puerta Europa</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@500;600&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="/#inicio" aria-label="Puerta Europa, inicio"><span class="brand-mark" set:html={Icon({ name: 'home', size: 25 })}></span><span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span></a>
+			<nav aria-label="Navegación principal"><a href="/#inicio">Inicio</a><a href="/#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a class="active" href="/ascensores/">Ascensores</a><a href="/#documentos">Documentos</a></nav>
+			<a class="mobile-home" href="/#inicio" aria-label="Volver al inicio">Inicio</a>
+		</header>
+
+		<main>
+			<section class="elevators">
+				<div class="elevators-heading"><div><span class="eyebrow">Ascensores</span><h1>Estado de ascensores por portal</h1><p>Resumen de modernización y resultados OCA</p></div><span class="elevator-heading-mark" set:html={Icon({name:'elevator',size:64})}></span></div>
+				<div class="elevator-board">
+					<div class="table-wrap" tabindex="0" aria-label="Tabla desplazable del estado de los ascensores">
+						<table class="elevator-table">
+							<thead><tr><th rowspan="2">Portal</th><th rowspan="2">Escalera</th><th rowspan="2">Ascensor</th><th rowspan="2"><abbr title="Registro de Aparatos Elevadores">RAE</abbr></th><th rowspan="2">Modernización</th><th colspan="3" class="oca-group">OCA</th></tr><tr><th>Resultado OCA</th><th>Fecha OCA</th><th>Siguiente OCA</th></tr></thead>
+							{elevatorPortals.map((portal) => <tbody>
+								{portal.rows.map((row, rowIndex) => { const stairRows = staircaseSpan(portal.rows, rowIndex); return <tr>
+									{rowIndex === 0 && <th class="portal-cell" scope="rowgroup" rowspan={portal.rows.length}>{portal.name}</th>}
+									{stairRows > 0 && <td class="staircase-cell" rowspan={stairRows}>{row.staircase}</td>}
+									<td>{row.elevator}</td><td>{row.rae}</td><td><span class={`status-pill ${row.modernization[1]}`}>{row.modernization[0]}</span></td><td><span class="status-list">{row.oca.length ? row.oca.map((status) => <span class={`status-pill ${status[1]}`}>{status[0]}</span>) : <span class="empty-value">—</span>}</span></td><td>{row.date}</td><td>{row.next}</td>
+								</tr>; })}
+							</tbody>)}
+						</table>
+					</div>
+				</div>
+				<div class="elevator-note"><span aria-hidden="true">i</span><p>Los resultados OCA corresponden a la última inspección registrada. Los datos proceden de la observación de etiquetas y actas de la comunidad; pueden contener errores. <strong>Información orientativa.</strong></p></div>
+			</section>
+			<div class="back-link"><a href="/#inicio">Volver al inicio <span aria-hidden="true">↑</span></a></div>
+		</main>
+
+		<footer id="contacto">
+			<div class="footer-brand"><span class="brand-mark" set:html={Icon({ name: 'home', size: 25 })}></span><div><strong>Comisión de Vecinos de Puerta Europa</strong><small>Un espacio para todos</small></div></div>
+			<div class="footer-legal"><strong>Información legal</strong><p>Este sitio tiene carácter informativo y recoge la actividad y documentación elaborada por la Comisión. La información publicada no constituye asesoramiento jurídico.</p><p>La Comisión es responsable de los contenidos publicados y revisa su actualización con la información disponible en cada momento.</p></div>
+			<div class="footer-contact"><p>¿Necesitas ayuda o tienes alguna consulta?</p><a href="tel:+34000000000"><span set:html={Icon({ name: 'phone', size: 18 })}></span> Contacta con nosotros</a></div>
+			<div class="footer-meta"><small class="ai-disclosure">El formato de esta web se ha generado con IA. El contenido es original de la Comisión.</small><small>© 2026 Comisión de Vecinos de Puerta Europa</small></div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	:root{--sage:#879a8a;--sage-dark:#526f60;--sage-pale:#e8eee9;--terracotta:#d9987a;--terracotta-dark:#ae5f45;--ink:#20231f;--muted:#6e736e;--cream:#fbfaf7;--line:#e9e3da;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--cream)}
+	*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 92% 0,#f7eee7 0,transparent 29rem),var(--cream);line-height:1.55}a{color:inherit;text-decoration:none}.site-header{height:88px;max-width:1240px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(135,154,138,.22)}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#9cae9f,#637e6e);font:600 12px Lora,serif;letter-spacing:.08em}.brand strong{font:600 21px/1.1 Lora,serif;display:block}.brand small,.footer-brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}.site-header nav{display:flex;gap:28px;font-size:14px;color:#555c57}.site-header nav a{position:relative}.site-header nav a:hover,.site-header nav .active{color:var(--sage-dark)}.site-header nav .active:after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:2px;background:var(--terracotta)}.mobile-home{display:none}
+	main{max-width:1240px;margin:auto;padding:0 28px}.elevators{margin:0 0 35px;padding:84px 14px 0;scroll-margin-top:24px}.elevators-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:25px}.elevators-heading .eyebrow{display:inline-block;color:var(--terracotta-dark);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:9px}.elevators-heading .eyebrow:after{content:'';display:block;width:45px;height:1px;margin-top:12px;background:var(--terracotta)}.elevators-heading h1{font:600 clamp(38px,4.3vw,60px)/1.08 Lora,serif;margin:0;letter-spacing:-.035em}.elevators-heading p{max-width:720px;margin:14px 0 0;color:#49615d;font-size:17px}.elevator-heading-mark{display:grid;place-items:center;width:145px;height:115px;border-bottom:1px solid #cdd5ce;color:var(--sage-dark);background:radial-gradient(circle,#eef1ec 0,transparent 70%);opacity:.78}.elevator-board{overflow:hidden;border:1px solid #deded6;border-radius:17px;background:rgba(255,255,255,.78);box-shadow:0 10px 28px rgba(60,50,40,.07)}.table-wrap{overflow-x:auto;scrollbar-color:var(--sage) #f1eee8}.table-wrap:focus-visible{outline:3px solid rgba(82,111,96,.35);outline-offset:3px}.elevator-table{width:100%;min-width:1080px;border-collapse:collapse;table-layout:fixed;font-size:13px}.elevator-table th,.elevator-table td{padding:11px 10px;border-right:1px solid #e3e0d9;border-top:1px solid #e3e0d9;text-align:center;vertical-align:middle}.elevator-table tr>*:last-child{border-right:0}.elevator-table thead th{background:rgba(247,246,241,.92);color:#18302b;font-size:12px;font-weight:600;white-space:nowrap}.elevator-table thead tr:first-child th{border-top:0}.elevator-table thead th[rowspan]{vertical-align:middle}.elevator-table thead .oca-group{background:#f1f2ec;font-size:14px;letter-spacing:.04em}.elevator-table th abbr{text-decoration:none}.elevator-table th:nth-child(1){width:12.5%}.elevator-table th:nth-child(2){width:11.5%}.elevator-table th:nth-child(3){width:12%}.elevator-table th:nth-child(4){width:8%}.elevator-table th:nth-child(5){width:20%}.elevator-table tbody+tbody tr:first-child>*{border-top:1.5px solid #d6d3cb}.elevator-table .portal-cell{background:#f5f1e8;color:#28493d;font:600 14px Lora,serif}.elevator-table .staircase-cell{background:#faf8f3;color:#5f6a63;font-size:12px}.status-pill{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:600;line-height:1.2}.status-pill.modernized{background:#e5eee6;color:#3c6a4b}.status-pill.neutral{background:#f1f1ed;color:#74776f}.status-list{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}.status-list .status-pill{max-width:100%;padding:5px 7px;line-height:1.25;white-space:normal;overflow-wrap:anywhere}.status-pill.danger{background:#f5dfdc;color:#a54e48}.status-pill.warning{background:#f5ead0;color:#927329}.status-pill.good{background:#e1eee4;color:#3f7650}.empty-value{color:#9a9d96}.elevator-note{display:flex;gap:10px;align-items:flex-start;margin-top:17px;padding:16px 18px;border:1px solid #e3e7df;border-radius:12px;background:#f2f5f0;color:#657067}.elevator-note>span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#dce7dc;color:var(--sage-dark);font-weight:700}.elevator-note p{margin:0;font-size:12px;line-height:1.5}.back-link{margin:0 0 70px;text-align:right}.back-link a{color:var(--sage-dark);font-size:12px;font-weight:600}.back-link a span{font-size:16px;margin-left:3px}
+	footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:34px 28px 45px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:24px 48px;color:var(--muted);font-size:12px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}.footer-brand .brand-mark{width:40px;height:40px}.footer-brand strong{font:600 16px Lora,serif}.footer-legal{grid-column:1;max-width:650px;color:#8b908b;font-size:11px;opacity:.82}.footer-legal strong{display:block;margin-bottom:4px;color:#737a74;font-size:11px;font-weight:500}.footer-legal p{margin:3px 0;line-height:1.45}.footer-contact{grid-column:2;grid-row:1 / span 2;align-self:center}.footer-contact p{margin:0 0 8px}.footer-contact a{display:flex;align-items:center;gap:7px;color:var(--sage-dark);font-weight:600}.footer-meta{grid-column:1;display:flex;flex-direction:column;gap:4px;color:#999}.footer-meta small{font-size:11px}.footer-meta .ai-disclosure{color:#858b85;max-width:650px}
+	@media(max-width:760px){.elevators{padding:56px 0 0;margin-bottom:0}.elevators-heading{align-items:flex-start;padding:0}.elevators-heading h1{font-size:34px}.elevators-heading p{font-size:14px}.elevator-heading-mark{display:none}.elevator-board{margin-right:-18px;border-radius:14px 0 0 14px}.table-wrap{padding-bottom:7px}.elevator-table{min-width:1020px;font-size:12px}.elevator-table th,.elevator-table td{padding:10px 8px}.elevator-note{padding:14px}.elevator-note p{font-size:11px}}
+	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}.site-header nav{display:none}.mobile-home{display:block;color:var(--sage-dark);font-size:12px;font-weight:600}main{padding:0 18px}footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-legal,footer .footer-contact,footer .footer-meta{grid-column:1;grid-row:auto}.footer-contact{align-self:start}}
+</style>
