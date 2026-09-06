@@ -45,7 +45,12 @@ const Icon = ({ name, size = 24 }: { name: 'home' | 'phone' | 'calendar'; size?:
 
 		<footer id="contacto">
 			<div class="footer-brand"><span class="brand-mark" set:html={Icon({ name: 'home', size: 25 })}></span><div><strong>Comisión de Vecinos de Puerta Europa</strong><small>Un espacio para todos</small></div></div>
-			<div class="footer-legal"><strong>Información legal</strong><p>Este sitio tiene carácter informativo y recoge la actividad y documentación elaborada por la Comisión. La información publicada no constituye asesoramiento jurídico.</p><p>La Comisión es responsable de los contenidos publicados y revisa su actualización con la información disponible en cada momento.</p></div>
+			<div class="footer-legal">
+				<strong>Información legal</strong>
+				<p>Este sitio tiene carácter informativo y difunde la actividad y documentación elaborada por la Comisión de Vecinos. La información publicada no constituye asesoramiento jurídico.</p>
+				<p>Los contenidos se elaboran y revisan por la Comisión y se publican con la información disponible en cada momento.</p>
+				<p>Para comunicar un posible error o aportar documentación relevante, puede utilizarse el formulario de contacto. La información se revisará y, cuando corresponda, se corregirá o actualizará.</p>
+			</div>
 			<div class="footer-contact"><p>¿Necesitas ayuda o tienes alguna consulta?</p><a href="/contacto/"><span set:html={Icon({ name: 'phone', size: 18 })}></span> Contacta con nosotros</a></div>
 			<div class="footer-meta"><small class="ai-disclosure">El formato de esta web se ha generado con IA. El contenido es original de la Comisión.</small><small>© 2026 Comisión de Vecinos de Puerta Europa</small></div>
 		</footer>
