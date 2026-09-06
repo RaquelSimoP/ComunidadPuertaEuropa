@@ -13,7 +13,7 @@ const Icon = ({ name, size = 24 }: { name: 'home' | 'phone' | 'calendar'; size?:
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Formulario de contacto de la Comunidad de Propietarios Puerta Europa." />
 		<title>Contacto · Comunidad Puerta Europa</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -79,4 +79,18 @@ const Icon = ({ name, size = 24 }: { name: 'home' | 'phone' | 'calendar'; size?:
 	footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:34px 28px 45px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:24px 48px;color:var(--muted);font-size:12px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}.footer-brand .brand-mark{width:40px;height:40px}.footer-brand strong{font:600 16px Lora,serif}.footer-legal{grid-column:1;max-width:650px;color:#8b908b;font-size:11px;opacity:.82}.footer-legal strong{display:block;margin-bottom:4px;color:#737a74;font-size:11px;font-weight:500}.footer-legal p{margin:3px 0;line-height:1.45}.footer-contact{grid-column:2;grid-row:1 / span 2;align-self:center}.footer-contact p{margin:0 0 8px}.footer-contact a{display:flex;align-items:center;gap:7px;color:var(--sage-dark);font-weight:600}.footer-meta{grid-column:1;display:flex;flex-direction:column;gap:4px;color:#999}.footer-meta small{font-size:11px}.footer-meta .ai-disclosure{color:#858b85;max-width:650px}
 	@media(max-width:850px){.site-header nav{gap:14px}.contact-layout{grid-template-columns:1fr;gap:35px;padding-top:55px}.contact-intro>p{font-size:15px}.contact-form{max-width:700px}}
 	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}.site-header nav{display:none}.mobile-home{display:block;color:var(--sage-dark);font-size:12px;font-weight:600}main{padding:0 18px}.contact-layout{padding:45px 0 35px}.contact-intro h1{font-size:43px}.contact-form{padding:25px 20px}.form-grid{grid-template-columns:1fr}footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-legal,footer .footer-contact,footer .footer-meta{grid-column:1;grid-row:auto}.footer-contact{align-self:start}}
+</style>
+
+<style>
+	.brand-mark, .contact-note span:first-child { flex-shrink: 0; }
+	.contact-layout > *, .form-grid > *, input, textarea { min-width: 0; }
+	@media (max-width: 760px) {
+		.site-header nav { display: none; }
+		.mobile-home { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; color: var(--sage-dark); font-size: 12px; font-weight: 600; }
+		input, textarea { font-size: 16px; }
+	}
+	@media (max-width: 600px) {
+		.contact-intro h1 { font-size: clamp(36px, 10.5vw, 43px); }
+		.contact-form .button { width: 100%; min-height: 44px; justify-content: center; }
+	}
 </style>

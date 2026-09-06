@@ -256,8 +256,8 @@ const calendarEntries = [
 		month: 'julio-2026',
 		date: '04/07/2026',
 		tags: ['comision', 'ayuntamiento'],
-		description: 'Durante toda la noche se detectan trabajos y ruidos en CUORE. Se avisa a la Policía Local y una integrante de la comisión permanece presente durante la intervención.',
-		action: 'La Policía Local levanta acta por la realización de trabajos en horario inadecuado y por la posible ausencia de licencia.',
+		description: 'La Policía Local interviene de madrugada en CUORE tras un aviso vecinal por ruidos relacionados con posibles trabajos en el local.',
+		action: ' El informe recoge la manifestación vecinal sobre los ruidos y señala que los agentes observaron el local reformado y material relacionado con obras. También hace constar que durante la intervención no se presentaron licencias ni autorizaciones para los trabajos.',
 		result: 'Se documenta la posible infracción y se deja constancia de la intervención oficial.',
 		dedication: '2h',
 		cost: '0€',
@@ -400,7 +400,7 @@ const calendarEntries = [
 		date: '28/08/2026',
 		tags: ['ayuntamiento', 'comision'],
 		description: 'Se recibe contestación por parte del Servicio Jurídico de Licencias.',
-		action: 'Se ha producido cambios en el departamento y no localizaban el expediente, subsanado el problema. Nos identifica como personados en el expediente en tramitación y vuelve a confirmar la tramitación de terrazas tipo B y su negativa inicial por parte del Ayuntamiento.',
+		action: 'Se ha producido cambios en el departamento y no localizaban el expediente, subsanado el problema. Se informa a la comisión de su personación en el expediente y vuelve a confirmar la tramitación de terrazas tipo B, que siguen en estudio por el técnico de Licencias debido a su complejidad.',
 		result: 'Se reubica el procedimiento administrativo y se confirma la personación de la comisión.',
 		dedication: '30min',
 		cost: '0€',
@@ -478,7 +478,7 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Portal de información de la Comunidad de Propietarios Puerta Europa." />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>Comunidad Puerta Europa</title>
@@ -492,10 +492,10 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 				<span class="brand-mark" set:html={Icon({ name: 'home', size: 29 })}></span>
 				<span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span>
 			</a>
-			<nav aria-label="Navegación principal">
+			<nav id="primary-nav" aria-label="Navegación principal">
 				<a class="active" href="#inicio">Inicio</a><a href="#aviso-propiedad">Avisos</a><a href="#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a href="#contacto">Contacto</a>
 			</nav>
-			<button class="menu" aria-label="Abrir menú" aria-expanded="false" set:html={Icon({ name: 'menu' })}></button>
+			<button class="menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="primary-nav" set:html={Icon({ name: 'menu' })}></button>
 		</header>
 
 		<main id="inicio">
@@ -651,17 +651,33 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 		<div class="footer-brand"><span class="brand-mark" set:html={Icon({name:'home',size:25})}></span><div><strong>Comisión de Vecinos de Puerta Europa</strong><small>Un espacio para todos</small></div></div>
 		<div class="footer-legal">
 			<strong>Información legal</strong>
-			<p>Este sitio tiene carácter informativo y recoge la actividad y documentación elaborada por la Comisión de Vecinos. La información publicada no constituye asesoramiento jurídico.</p>
-			<p>La Comisión es responsable de los contenidos publicados y revisa su actualización con la información disponible en cada momento.</p>
+			<p>Este sitio tiene carácter informativo y difunde la actividad y documentación elaborada por la Comisión de Vecinos. La información publicada no constituye asesoramiento jurídico.</p>
+			<p>Los contenidos se elaboran y revisan por la Comisión y se publican con la información disponible en cada momento.</p>
+			<p>Para comunicar un posible error o aportar documentación relevante, puede utilizarse el formulario de contacto. La información se revisará y, cuando corresponda, se corregirá o actualizará.</p>
 		</div>
 		<div class="footer-contact"><p>¿Necesitas ayuda o tienes alguna consulta?</p><a href="/contacto/"><span set:html={Icon({name:'phone',size:18})}></span> Contacta con nosotros</a></div>
 		<div class="footer-meta"><small class="ai-disclosure">El formato de esta web se ha generado con IA. El contenido es original de la Comisión.</small><small>© 2026 Comisión de Vecinos de Puerta Europa</small></div>
 	</footer>
 		<script>
-			const button = document.querySelector('.menu');
-			const nav = document.querySelector('nav');
-			button?.addEventListener('click', () => { const open = nav?.classList.toggle('open'); button.setAttribute('aria-expanded', String(Boolean(open))); });
-			document.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => nav?.classList.remove('open')));
+			const menuButton = document.querySelector<HTMLButtonElement>('.menu');
+			const nav = document.querySelector<HTMLElement>('#primary-nav');
+			const setMenuOpen = (open: boolean) => {
+				nav?.classList.toggle('open', open);
+				menuButton?.setAttribute('aria-expanded', String(open));
+				menuButton?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+			};
+			menuButton?.addEventListener('click', () => setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true'));
+			nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenuOpen(false)));
+			document.addEventListener('keydown', (event) => {
+				if (event.key === 'Escape' && nav?.classList.contains('open')) {
+					setMenuOpen(false);
+					menuButton?.focus();
+				}
+			});
+			document.addEventListener('click', (event) => {
+				if (event.target instanceof Node && !nav?.contains(event.target) && !menuButton?.contains(event.target)) setMenuOpen(false);
+			});
+			window.matchMedia('(max-width: 900px)').addEventListener('change', () => setMenuOpen(false));
 
 			const monthButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter-group="month"] .filter-button');
 			const tagButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter-group="tag"] .filter-button');
@@ -750,4 +766,44 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 	.avisos-nav{width:calc(100% - 48px);max-width:1180px;margin-left:auto;margin-right:auto}.aviso-card{text-align:center}.aviso-card-top{position:relative;justify-content:center}.aviso-card-number{position:absolute;top:-2px;right:0}.aviso-card strong{max-width:none}.aviso-card-link{text-align:center}
 	main{display:flex;flex-direction:column}main>.hero{order:1}main>.avisos-nav{order:2}main>.quick-grid{order:3}main>#aviso-propiedad{order:4}main>#aviso-propiedad+.back-to-top-wrap{order:5}main>#aviso-informe-juridico{order:6}main>#aviso-informe-juridico+.back-to-top-wrap{order:7}main>#aviso-accion{order:8}main>#aviso-accion+.back-to-top-wrap{order:9}main>.calendar-section{order:10}main>.calendar-section+.back-to-top-wrap{order:11}main>.documents{order:12}main>.documents+.back-to-top-wrap{order:13}main>.elevators{order:14}main>.elevators+.back-to-top-wrap{order:15}
 	main>.questions-promo{order:14}main>.questions-promo+.back-to-top-wrap{order:15}.questions-promo h2 em{font-style:normal;color:var(--sage-dark)}.questions-stack .question-mark{font:600 34px Lora,serif;color:var(--terracotta-dark)}
+</style>
+
+<style is:global>
+	/* Allow flex and grid children to fit the available screen width. */
+	main > *, .hero > *, .documents > *, .event-card { min-width: 0; }
+	.brand-mark, .quick-card .go { flex-shrink: 0; }
+	.button { max-width: 100%; }
+	.button > span { flex-shrink: 0; }
+	.calendar-weekbar, .calendar-toolbar, .filter-group { min-width: 0; max-width: 100%; }
+	.aviso-card-top { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: center; }
+	.aviso-card-number { position: static; }
+
+	@media (max-width: 900px) {
+		.menu { min-width: 44px; min-height: 44px; padding: 10px; cursor: pointer; }
+		.site-header nav { top: 88px; gap: 4px; }
+		.site-header nav a { display: flex; align-items: center; justify-content: center; min-height: 44px; width: 100%; }
+		.site-header nav a.active:after { bottom: 0; }
+	}
+
+	@media (max-width: 600px) {
+		.site-header nav { top: 75px; }
+		.hero h1 { font-size: clamp(36px, 10.5vw, 44px); }
+		.avisos-nav { width: 100%; }
+		.filter-group { flex-wrap: wrap; gap: 8px; overflow-x: visible; }
+		.filter-button { min-height: 44px; padding: 10px 14px; }
+		.calendar-weekbar { width: 100%; }
+		.calendar-weekbar .filter-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(58px, 1fr)); width: 100%; }
+		.calendar-weekbar .filter-button { width: 100%; min-width: 0; }
+		.calendar-entry { flex-direction: column; }
+		.event-time { flex: none; max-width: 100%; margin-top: 0; padding: 8px 12px; font-size: 13px; }
+		.event-card { width: 100%; }
+		.community-alert { padding: 24px 16px; }
+		.alert-grid article, .legal-summary, .alert-context, .alert-callout { padding: 18px 16px; }
+		.legal-summary h3 { margin-right: 0; }
+		.legal-summary ol > li { padding: 54px 14px 16px; }
+		.alert-actions .button { width: 100%; justify-content: center; text-align: center; }
+		.documents { grid-template-columns: minmax(0, 1fr); padding: 32px 20px; }
+		.paper-stack { width: 100%; max-width: 300px; transform: none; margin-bottom: 0; }
+		.paper { width: calc(100% - 28px); padding: 24px; }
+	}
 </style>
