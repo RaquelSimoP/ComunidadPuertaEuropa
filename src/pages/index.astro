@@ -196,7 +196,7 @@ const calendarEntries = [
 		dedication: 'Dos semanas de revisión y coordinación',
 		cost: '',
 		others: 'Los escritos se centran en los posibles incumplimientos y en la documentación municipal.',
-	},0€
+	},
 	{
 		month: 'abril-2026',
 		date: 'Abril–junio de 2026',
@@ -523,7 +523,7 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 
 				<div class="calendar-weekbar" aria-label="Filtrar por mes">
 					<div class="filter-group" data-filter-group="month">
-						<button class="week-day active filter-button" type="button" data-filter-type="month" data-value="all" aria-pressed="true"><span class="day-num">Todos</span><span class="day-name">2026</span></button>
+						<button class="week-day is-active filter-button" type="button" data-filter-type="month" data-value="all" aria-pressed="true"><span class="day-num">Todos</span><span class="day-name">2026</span></button>
 						{calendarMonths.map((month) => <button class="week-day filter-button" type="button" data-filter-type="month" data-value={month.key} aria-pressed="false"><span class="day-num">{month.label.split(' ')[0].slice(0, 3)}</span><span class="day-name">2026</span></button>)}
 					</div>
 				</div>
