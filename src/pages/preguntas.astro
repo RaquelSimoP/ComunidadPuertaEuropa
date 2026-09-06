@@ -1,0 +1,119 @@
+---
+const Icon = ({ name, size = 24 }: { name: 'home' | 'phone'; size?: number }) => {
+	const paths = {
+		home: '<path d="m3 11 9-9 9 9"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>',
+		phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+	};
+	return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
+};
+
+const questions = [
+	{
+		title: 'Si el soportal es privado, ¿por qué se discute si es de uso público?',
+		answer: `<p>Porque un espacio puede pertenecer a la Comunidad y, aun así, tener reconocido un uso público. Por eso es importante distinguir cada zona.</p><p>El informe jurídico concluye que <strong>la franja del soportal analizada es privada y de uso exclusivo de la Comunidad</strong>, y la diferencia del espacio exterior de uso público.</p><p>Esto significa que los propietarios podemos acordar cómo proteger y utilizar ese soportal, respetando la normativa y los derechos existentes. Que esté abierto no significa que esté a libre disposición de cualquier actividad.</p>`,
+	},
+	{
+		title: '¿En qué se apoya esa conclusión?',
+		answer: `<p>En el estudio de la escritura de división horizontal, los estatutos, documentación técnica, licencias y resoluciones judiciales anteriores.</p><p><strong>Tenemos una base documental y un criterio jurídico para actuar.</strong> El abogado identifica la zona sobre la que considera posible regular el paso y estudiar un cierre.</p><p>Además, el PERI de Rubín regula los espacios libres privados y contempla determinados vallados. El siguiente paso es comprobar sobre los planos cómo encajan esas condiciones en nuestra Comunidad y preparar una propuesta viable.</p>`,
+	},
+	{
+		title: 'Si siempre ha pasado gente por el soportal, ¿por qué se plantea regular el acceso ahora?',
+		answer: `<p>Porque el uso que se hace de un espacio y los problemas que genera pueden cambiar con el tiempo. Las molestias y ocupaciones comunicadas hacen necesario revisar cómo estamos protegiendo una zona que compartimos y mantenemos entre todos.</p><p>El paso de personas durante años no demuestra, por sí solo, que exista un derecho de uso público. El informe contempla regularlo siempre que se respeten los derechos de paso que pudieran existir.</p><p><strong>Haber mantenido el soportal abierto no nos obliga a aceptar cualquier utilización de él.</strong></p>`,
+	},
+	{
+		title: '¿No hubo resoluciones judiciales que hablaron de suelo privado de uso público?',
+		answer: `<p>Sí, y el abogado las ha tenido en cuenta. Según su análisis, se referían al espacio de la terraza autorizado por la licencia discutida entonces.</p><p>La conclusión del informe es que <strong>aquellas resoluciones no convierten automáticamente todo el soportal en una zona de uso público</strong>.</p><p>Por eso debemos trabajar con una delimitación precisa: saber exactamente qué superficie se propone proteger y qué derechos existen sobre ella. Ese estudio permite avanzar con fundamento y evitar errores.</p>`,
+	},
+	{
+		title: 'Si el Ayuntamiento ha autorizado las terrazas, ¿no está autorizando también que se pase por el soportal?',
+		answer: `<p><strong>La licencia de terraza no concede por sí sola el derecho a utilizar cualquier espacio privado para llegar a ella.</strong></p><p>El informe distingue el permiso municipal para instalar una terraza del permiso necesario para aprovechar una zona comunitaria como acceso comercial.</p><p>Por tanto, una terraza puede tener licencia y, al mismo tiempo, necesitar autorización de la Comunidad para utilizar el soportal. El funcionamiento del negocio debe respetar ambos ámbitos.</p>`,
+	},
+	{
+		title: 'Si los estatutos permiten abrir las puertas traseras, ¿no permiten también utilizarlas para acceder a las terrazas?',
+		answer: `<p>El informe reconoce que los estatutos permiten abrir huecos o entradas bajo determinadas condiciones. Por eso desaconseja reclamar el cierre de las puertas traseras basándose únicamente en su apertura.</p><p>Pero <strong>poder abrir las puertas traseras no equivale a disponer libremente del espacio comunitario situado delante de ellas</strong>.</p><p>El abogado considera que podemos estudiar cómo regular el paso por el soportal y protegerlo. La propuesta deberá respetar los derechos de los locales y los del conjunto de propietarios.</p>`,
+	},
+	{
+		title: '¿Es cerrar el soportal una solución?',
+		answer: `<p>Queremos poder utilizar y cuidar nuestro soportal sin que funcione como una prolongación de las terrazas sin autorización comunitaria.</p><p>Se detectan ruidos evitables en la colocación de sillas y mesas, incluso fuera del horario establecido. También se han comunicado daños y desperfectos atribuidos a clientes habituales y una intervención insuficiente para evitar que se repitan del personal de los establecimientos.</p><p>Son incidencias documentadas y probadas. La intervención policial del 4 de julio recoge ruidos, indicios de obras y que no se mostraron licencias durante la actuación; corresponde verificar su situación administrativa.</p><p><strong>El cierre permitiría controlar mejor el acceso y la ocupación del soportal.</strong> La finalidad esproteger un elemento común de titularidad privada, evitar su utilización por terceros sin autorización, reducir daños y costes de mantenimiento y mejorar la seguridad del inmueble, manteniendo en todo caso los accesos necesarios para propietarios, residentes, emergencias y servicios autorizados.</p>`,
+	},
+	{
+		title: '¿Cerrar no supone apropiarse de una zona pública o perjudicar deliberadamente a los negocios?',
+		answer: `<p>La propuesta debe actuar únicamente sobre el espacio privado de uso comunitario que corresponda, respetando las zonas públicas y los derechos de paso.</p><p><strong>¿Permitirías que un extraño atravesara el salón de tu casa para acceder otra zona común?. Cuidar nuestra casa y nuestros espacios comunes es un interés legítimo de todos los propietarios.</strong> La Comunidad tiene obligaciones de mantenimiento y seguridad. Si ocurre un accidente, las responsabilidades dependerán de sus causas y de la actuación de cada implicado; no recaen automáticamente en la Comunidad por ser dueña del suelo.</p><p>Aunque las molestias se sufran más en unas viviendas que en otras, conservar un entorno tranquilo y cuidado beneficia al conjunto del edificio. Los ruidos, molestias y constantes altercados devalúan tu vivienda.</p>`,
+	},
+    {
+		title: '¿Concederá el Ayuntamiento la licencia de cierre?',
+		answer: `<p><strong>Hay una base concreta para estudiar su autorización.</strong> El PERI de Rubín, publicado en el BOPA del 27 de mayo de 1997, permite que los espacios libres privados dispongan de vallado hacia el viario público.</p><p>Para ese supuesto establece una altura máxima general de 1,20 metros y contempla soluciones vegetales o muretes de hasta 50 centímetros completados con otros elementos.</p><p>Solo con pasear por el entorno se observa la existencia de manzanas cerradas. Algunas recientemente autorizadas, y las consultas verbales a Urbanismo han sido favorables a estudiar la posibilidad de cierre.</p><p><strong>Son razones para avanzar, aunque la autorización de nuestra solución concreta debe tramitarse.</strong> El Ayuntamiento comprobará el cumplimiento del planeamiento y de la normativa, una denegación deberá explicar qué norma incumple la propuesta.</p>`,
+	},
+	{
+		title: '¿Cómo sería el cierre, cuánto costaría y cómo afectarían los accesos?',
+		answer: `<p>Todavía no tenemos una propuesta suficientemente desarrollada para dar esas respuestas. Necesitamos un anteproyecto que estudie las alternativas, los accesos, la seguridad, la accesibilidad y el presupuesto.</p><p>Sabemos que los ascensores suponen un esfuerzo económico importante y que hay necesidades que deben atenderse primero. <strong>Podemos avanzar poco a poco y organizar el trabajo según las prioridades de la Comunidad.</strong></p><p>Reunir documentación, aclarar las condiciones municipales y estudiar soluciones no significa empezar una obra de inmediato. Significa prepararnos para decidir bien cuando corresponda.</p>`,
+	},
+   	{
+		title: '¿No sería mejor pactar que las terrazas estuvieran dentro del soportal? ¿Qué pasaría si se incumpliera el acuerdo?',
+		answer: `<p>Antes de aceptar esa posibilidad tendríamos que preguntarnos qué ganaría la Comunidad y qué dificultades asumiría. Acercar la actividad a las viviendas podría aumentar las molestias, y autorizar el uso comercial del soportal exigiría estudiar su viabilidad, los acuerdos necesarios y las garantías.</p><p>Hablar y buscar soluciones puede ser útil. Pero para llegar a un acuerdo necesitamos confianza, y esa confianza se construye con hechos.</p><p><strong>Firmar un contrato no asegura que los problemas se resuelvan cuando alguien incumple.</strong></p><p>Las características privadas del contrato podrían requerir una reclamación civil y, si hubiera oposición, acudir a los tribunales. Eso supondría tiempo, gastos y problemas de convivencia.</p><p><strong>La mejor señal de colaboración sería que dejaran de repetirse las mismas quejas.</strong> Una gestión que se adelante a los problemas y cuide el descanso de sus vecinos merece reconocimiento y mejora la imagen del propio establecimiento.</p><p>El diálogo debe centrarse en esos resultados.</p>`,
+	},
+	{
+		title: '¿Por qué debe continuar la Comisión y eso significa aprobar ya el cierre?',
+		answer: `<p>La Comisión debe continuar para completar la documentación, ordenar las incidencias y estudiar soluciones viables, técnicas y económicas.</p><p><strong>Continuar el trabajo no significa aprobar el cierre.</strong> Cada propietario podrá decidir cuando exista una propuesta concreta, con sus condiciones y su coste. La decisión final y los acuerdos necesarios corresponderán a la Junta.</p>`,
+	},
+	
+];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="Preguntas y respuestas sobre la propiedad, el uso y las posibles actuaciones en los soportales de Puerta Europa." />
+		<title>Preguntas y respuestas · Comunidad Puerta Europa</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@500;600&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="/#inicio" aria-label="Puerta Europa, inicio"><span class="brand-mark">PE</span><span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span></a>
+			<nav aria-label="Navegación principal"><a href="/#inicio">Inicio</a><a href="/#calendario">Calendario</a><a class="active" href="/preguntas/">Preguntas y respuestas</a><a href="/#documentos">Documentos</a></nav>
+			<a class="mobile-home" href="/#inicio" aria-label="Volver al inicio">Inicio</a>
+		</header>
+
+		<main>
+			<section class="page-intro">
+				<div><span class="eyebrow">Preguntas y respuestas</span><h1>Entender la situación<br /><em>para decidir mejor</em></h1><p>Respuestas claras a las dudas más habituales sobre el soportal, los accesos, las molestias y el trabajo que queda por hacer.</p></div>
+				<div class="intro-mark" aria-hidden="true">?</div>
+			</section>
+
+			<section class="answers" aria-label="Respuestas">
+				{questions.map((question, index) => <details class="answer-card" id={`pregunta-${index + 1}`} open={index === 0}>
+					<summary><span class="answer-number">{String(index + 1).padStart(2, '0')}</span><span>{question.title}</span><b aria-hidden="true">+</b></summary>
+					<div class="answer-body" set:html={question.answer}></div>
+				</details>)}
+			</section>
+			<div class="back-link"><a href="/#inicio">Volver al inicio <span aria-hidden="true">↑</span></a></div>
+		</main>
+
+		<footer id="contacto">
+			<div class="footer-brand"><span class="brand-mark" set:html={Icon({ name: 'home', size: 25 })}></span><div><strong>Comisión de Vecinos de Puerta Europa</strong><small>Un espacio para todos</small></div></div>
+			<div class="footer-legal">
+				<strong>Información legal</strong>
+				<p>Este sitio tiene carácter informativo y recoge la actividad y documentación elaborada por la Comisión. La información publicada no constituye asesoramiento jurídico.</p>
+				<p>La Comisión es responsable de los contenidos publicados y revisa su actualización con la información disponible en cada momento.</p>
+			</div>
+			<div class="footer-contact"><p>¿Necesitas ayuda o tienes alguna consulta?</p><a href="tel:+34000000000"><span set:html={Icon({ name: 'phone', size: 18 })}></span> Contacta con nosotros</a></div>
+			<div class="footer-meta"><small class="ai-disclosure">El formato de esta web se ha generado con IA. El contenido es original de la Comisión.</small><small>© 2026 Comisión de Vecinos de Puerta Europa</small></div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	:root{--sage:#879a8a;--sage-dark:#526f60;--sage-pale:#e8eee9;--terracotta:#d9987a;--terracotta-dark:#ae5f45;--ink:#20231f;--muted:#6e736e;--cream:#fbfaf7;--line:#e9e3da;--warm:#f7f0e6;--shadow:0 12px 35px rgba(65,55,42,.08);font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--cream)}
+	*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 92% 0,#f7eee7 0,transparent 29rem),var(--cream);line-height:1.55}a{color:inherit;text-decoration:none}.site-header{height:88px;max-width:1240px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(135,154,138,.22)}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#9cae9f,#637e6e);font:600 12px Lora,serif;letter-spacing:.08em}.brand strong{font:600 21px/1.1 Lora,serif;display:block}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}.site-header nav{display:flex;gap:28px;font-size:14px;color:#555c57}.site-header nav a{position:relative}.site-header nav a:hover,.site-header nav .active{color:var(--sage-dark)}.site-header nav .active:after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:2px;background:var(--terracotta)}.mobile-home{display:none}
+	main{max-width:1184px;margin:auto;padding:0 28px}.page-intro{display:flex;align-items:center;justify-content:space-between;gap:40px;padding:84px 0 54px}.eyebrow{display:inline-block;color:var(--terracotta-dark);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:13px}.page-intro h1{font:600 clamp(44px,5vw,70px)/1.06 Lora,serif;letter-spacing:-.035em;margin:0}.page-intro h1 em{font-style:normal;color:var(--sage-dark)}.page-intro p{max-width:650px;margin:24px 0 0;color:var(--muted);font-size:17px}.intro-mark{width:128px;height:128px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;background:#f2ded8;color:var(--terracotta-dark);font:600 75px Lora,serif;box-shadow:0 10px 25px rgba(174,95,69,.1)}
+	.question-index{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:54px;padding:22px;border:1px solid #e5d7bc;border-radius:20px;background:linear-gradient(145deg,#fffdf8,#f7f0e6)}.question-index a{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:10px;color:#4b5b55;font-size:12px;line-height:1.35;transition:background .2s ease,color .2s ease}.question-index a:hover{background:#fff;color:var(--sage-dark)}.question-index span{color:var(--terracotta-dark);font-size:11px;font-weight:600;letter-spacing:.08em;flex:0 0 auto}.answers{display:grid;gap:14px}.answer-card{border:1px solid #e5d7bc;border-radius:17px;background:linear-gradient(145deg,#fffdf8,#f8f3eb);box-shadow:0 7px 22px rgba(84,67,48,.045);scroll-margin-top:24px}.answer-card summary{display:grid;grid-template-columns:48px 1fr 28px;align-items:center;gap:16px;padding:22px 25px;cursor:pointer;list-style:none;font:600 22px/1.25 Lora,serif;color:#1c2b26}.answer-card summary::-webkit-details-marker{display:none}.answer-card summary>b{display:grid;place-items:center;width:28px;height:28px;border:1px solid #cbd7cc;border-radius:50%;color:var(--sage-dark);font:400 21px/1 DM Sans,sans-serif}.answer-card[open] summary>b{transform:rotate(45deg);background:var(--sage-pale)}.answer-number{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#e9eee9;color:var(--sage-dark);font:600 16px Lora,serif}.answer-body{max-width:920px;margin:0 69px 26px;padding-top:18px;border-top:1px solid #e6dfd3;color:#4d5751;font-size:15px}.answer-body p{margin:0 0 15px}.answer-body strong{color:#183d67}.back-link{margin:28px 0 70px;text-align:right}.back-link a{color:var(--sage-dark);font-size:12px;font-weight:600}.back-link a span{font-size:16px;margin-left:3px}footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:30px 28px 42px;display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+	.questions-title{margin:48px 0 18px;color:var(--terracotta-dark);font:600 28px/1.2 Lora,serif}.question-index{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:42px;padding:22px;border:1px solid #e5d7bc;border-radius:20px;background:linear-gradient(145deg,#fffdf8,#f7f0e6)}.question-index a{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:10px;color:#4b5b55;font-size:11px;line-height:1.35;transition:background .2s ease,color .2s ease}.question-index a:hover{background:#fff;color:var(--sage-dark)}.question-index span{color:var(--terracotta-dark);font-size:11px;font-weight:600;letter-spacing:.08em;flex:0 0 auto}.answers{display:grid;gap:14px}.answer-card{border:1px solid #e5d7bc;border-radius:17px;background:linear-gradient(145deg,#fffdf8,#f8f3eb);box-shadow:0 7px 22px rgba(84,67,48,.045);scroll-margin-top:24px}.answer-card summary{display:grid;grid-template-columns:48px 1fr 28px;align-items:center;gap:16px;padding:18px 25px;cursor:pointer;list-style:none;font:600 18px/1.25 Lora,serif;color:#1c2b26}.answer-card summary::-webkit-details-marker{display:none}.answer-card summary>b{display:grid;place-items:center;width:28px;height:28px;border:1px solid #d7b8a7;border-radius:50%;color:var(--terracotta-dark);font:400 21px/1 DM Sans,sans-serif}.answer-card[open] summary>b{transform:rotate(45deg);background:#f2ded8}.answer-number{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#f2ded8;color:var(--terracotta-dark);font:600 16px Lora,serif}.answer-body{max-width:920px;margin:0 69px 24px;padding-top:16px;border-top:1px solid #e6dfd3;color:#4d5751;font-size:14px}.answer-body p{margin:0 0 13px}.answer-body strong{color:#183d67}.back-link{margin:28px 0 70px;text-align:right}.back-link a{color:var(--sage-dark);font-size:12px;font-weight:600}.back-link a span{font-size:16px;margin-left:3px}footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:30px 28px 42px;display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+	@media(max-width:900px){.site-header nav{gap:15px}.question-index{grid-template-columns:repeat(2,1fr)}.page-intro{padding-top:65px}.intro-mark{width:100px;height:100px;font-size:60px}}
+	@media(max-width:600px){.site-header{height:75px;padding:0 18px}.brand-mark{width:42px;height:42px}.brand strong{font-size:18px}.brand small{font-size:9px}.site-header nav{display:none}.mobile-home{display:block;color:var(--sage-dark);font-size:12px;font-weight:600}main{padding:0 18px}.page-intro{display:block;padding:55px 0 38px}.page-intro h1{font-size:43px}.page-intro p{font-size:15px}.intro-mark{display:none}.question-index{grid-template-columns:1fr;gap:4px;margin-bottom:38px;padding:14px}.question-index a{font-size:12px}.answer-card summary{grid-template-columns:39px 1fr 24px;gap:11px;padding:18px 15px;font-size:18px}.answer-number{width:35px;height:35px;font-size:14px}.answer-body{margin:0 15px 20px;padding-top:15px;font-size:14px}.back-link{margin-bottom:48px}footer{display:block;padding:26px 18px}footer span{display:block;margin:4px 0}}
+	footer{border-top:1px solid var(--line);max-width:1240px;margin:auto;padding:34px 28px 45px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:24px 48px;color:var(--muted);font-size:12px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}.footer-brand .brand-mark{width:40px;height:40px}.footer-brand strong{font:600 16px Lora,serif}.footer-brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}.footer-legal{grid-column:1;max-width:650px;color:#8b908b;font-size:11px;opacity:.82}.footer-legal strong{display:block;margin-bottom:4px;color:#737a74;font-size:11px;font-weight:500}.footer-legal p{margin:3px 0;line-height:1.45}.footer-contact{grid-column:2;grid-row:1 / span 2;align-self:center}.footer-contact p{margin:0 0 8px}.footer-contact a{display:flex;align-items:center;gap:7px;color:var(--sage-dark);font-weight:600}.footer-meta{grid-column:1;display:flex;flex-direction:column;gap:4px;color:#999}.footer-meta small{font-size:11px}.footer-meta .ai-disclosure{color:#858b85;max-width:650px}
+	@media(max-width:600px){footer{grid-template-columns:1fr;padding:28px 18px}footer .footer-brand,footer .footer-legal,footer .footer-contact,footer .footer-meta{grid-column:1;grid-row:auto}.footer-contact{align-self:start}}
+</style>

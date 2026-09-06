@@ -19,7 +19,7 @@ const Icon = ({ name, size = 24 }: { name: string; size?: number }) => {
 const quickLinks = [
 	{ icon: 'file', title: 'Documentos', text: 'Actas, estatutos y circulares', tone: 'sage', href: '#documentos' },
 	{ icon: 'calendar', title: 'Calendario', text: 'Seguimiento de actuaciones', tone: 'sand', href: '#calendario' },
-	{ icon: 'help', title: 'Preguntas y respuestas', text: 'Aclaraciones de la comunidad', tone: 'blue', href: '#preguntas' },
+	{ icon: 'help', title: 'Preguntas y respuestas', text: 'Aclaraciones de la comunidad', tone: 'blue', href: '/preguntas/' },
 	{ icon: 'elevator', title: 'Ascensores', text: 'Información para propietarios', tone: 'rose', href: '#ascensores' },
 ];
 
@@ -493,7 +493,7 @@ const staircaseSpan = (rows: Array<{ staircase: string }>, rowIndex: number) => 
 				<span><strong>Puerta Europa</strong><small>Comunidad de propietarios</small></span>
 			</a>
 			<nav aria-label="Navegación principal">
-				<a class="active" href="#inicio">Inicio</a><a href="#calendario">Calendario</a><a href="#documentos">Documentos</a><a href="#contacto">Contacto</a>
+				<a class="active" href="#inicio">Inicio</a><a href="#calendario">Calendario</a><a href="/preguntas/">Preguntas y respuestas</a><a href="#documentos">Documentos</a><a href="#contacto">Contacto</a>
 			</nav>
 			<button class="menu" aria-label="Abrir menú" aria-expanded="false" set:html={Icon({ name: 'menu' })}></button>
 		</header>
