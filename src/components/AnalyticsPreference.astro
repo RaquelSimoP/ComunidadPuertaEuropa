@@ -1,0 +1,114 @@
+<div class="analytics-preference">
+	<p class="analytics-status" aria-live="polite"></p>
+	<button class="analytics-toggle" type="button" aria-pressed="false">
+		<span class="analytics-indicator" aria-hidden="true"></span>
+		<span class="analytics-label">Excluir mis visitas en este navegador</span>
+	</button>
+</div>
+
+<script>
+	const storageKey = 'puerta-europa:exclude-analytics';
+	const preferences = document.querySelectorAll<HTMLElement>('.analytics-preference');
+
+	for (const preference of preferences) {
+		const button = preference.querySelector<HTMLButtonElement>('.analytics-toggle');
+		const label = preference.querySelector<HTMLElement>('.analytics-label');
+		const status = preference.querySelector<HTMLElement>('.analytics-status');
+
+		if (!button || !label || !status) continue;
+
+		const readExcluded = () => {
+			try {
+				return localStorage.getItem(storageKey) === 'true';
+			} catch {
+				return false;
+			}
+		};
+
+		const render = (excluded: boolean) => {
+			button.setAttribute('aria-pressed', String(excluded));
+			label.textContent = excluded
+				? 'Volver a contar mis visitas'
+				: 'Excluir mis visitas en este navegador';
+			status.textContent = excluded
+				? 'Analíticas: este navegador está excluido.'
+				: 'Analíticas: las visitas de este navegador se cuentan.';
+			preference.classList.toggle('is-excluded', excluded);
+		};
+
+		render(readExcluded());
+
+		button.addEventListener('click', () => {
+			const excluded = !readExcluded();
+			try {
+				localStorage.setItem(storageKey, String(excluded));
+				render(excluded);
+				status.textContent = excluded
+					? 'Exclusión activada. Se aplicará desde la próxima página que abras.'
+					: 'Exclusión desactivada. Se aplicará desde la próxima página que abras.';
+			} catch {
+				status.textContent = 'Este navegador no permite guardar la preferencia.';
+			}
+		});
+
+		window.addEventListener('storage', (event) => {
+			if (event.key === storageKey) render(readExcluded());
+		});
+	}
+</script>
+
+<style>
+	.analytics-preference {
+		grid-column: 1;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 7px 12px;
+		color: #737a74;
+	}
+
+	.analytics-status {
+		flex-basis: 100%;
+		margin: 0;
+		font-size: 12px;
+		line-height: 1.45;
+	}
+
+	.analytics-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: #526f60;
+		font: 600 13px/1.4 'DM Sans', sans-serif;
+		text-decoration: underline;
+		text-decoration-color: rgba(82, 111, 96, .35);
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
+
+	.analytics-toggle:hover {
+		text-decoration-color: currentColor;
+	}
+
+	.analytics-toggle:focus-visible {
+		outline: 3px solid rgba(82, 111, 96, .3);
+		outline-offset: 4px;
+		border-radius: 3px;
+	}
+
+	.analytics-indicator {
+		width: 9px;
+		height: 9px;
+		border: 1px solid currentColor;
+		border-radius: 50%;
+		background: transparent;
+	}
+
+	.is-excluded .analytics-indicator {
+		background: currentColor;
+		box-shadow: inset 0 0 0 2px #fff;
+	}
+</style>

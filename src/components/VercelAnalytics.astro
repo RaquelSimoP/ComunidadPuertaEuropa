@@ -1,0 +1,19 @@
+---
+import Analytics from '@vercel/analytics/astro';
+---
+
+<script is:inline>
+	function webAnalyticsBeforeSend(event) {
+		try {
+			if (localStorage.getItem('puerta-europa:exclude-analytics') === 'true') {
+				return null;
+			}
+		} catch {
+			// If browser storage is unavailable, keep analytics working normally.
+		}
+
+		return event;
+	}
+</script>
+
+<Analytics />
